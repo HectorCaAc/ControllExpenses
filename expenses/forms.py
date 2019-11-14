@@ -1,6 +1,4 @@
 from django import forms
+from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
-from account.models import CustomUser
-
-class ExpensesForm(forms.Form):
-    description = forms.CharField(max_length=255,)
+from expenses.models import Category, Expenses

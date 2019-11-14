@@ -2,14 +2,14 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>add user</title>
+    <title></title>
   </head>
   <body>
-    TEST
-    <form  method="POST">
+    There was a new expense add to the db
+    <form class=""  method="POST">
       {% csrf_token %}
       {{ form.as_p }}
-      <button type='submit'>Submit !</button>
+      <button type="submit" name="button">Register new Button</button>
     </form>
   </body>
 </html>

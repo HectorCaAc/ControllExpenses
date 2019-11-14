@@ -1,5 +1,5 @@
 from django.urls import re_path
-from expenses.views import PersonExpenses, CreateCategory
+from expenses import views
 
 app_name='expenses'
 '''
@@ -7,6 +7,7 @@ app_name='expenses'
     - add templates, add authentication and authorization
 '''
 urlpatterns = [
-    re_path(r'category$',CreateCategory.as_view()),
-    re_path(r'$', PersonExpenses.as_view(), name='person_expenses'),
+    re_path(r'category/$', views.CreateCategory.as_view(), name='category'),
+    re_path(r'add/$', views.AddExpense.as_view(), name="add"),
+    re_path(r'user/(?P<user>\d+)/$', views.PersonData.as_view(), name='person_expenses'),
 ]
