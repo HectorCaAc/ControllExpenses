@@ -7,7 +7,7 @@ from expenses.models import Category, Expenses
 # Create your views here.
 class PersonData(View):
     models=Expenses
-    template_name='person_expenses.html'
+    template_name='expenses/summary.html'
 
     def post(self, request):
         print("Data in this part of the project")
@@ -17,10 +17,10 @@ class PersonData(View):
         categories= Category.objects.filter(user__id=user)
         expenses = Expenses.objects.filter(user_id=user)
         data ={
-            'Categories':categories,
-            'Expenses':expenses
+            'categories':categories,
+            'expenses':expenses
         }
-        return render(request, self.template_name)
+        return render(request, self.template_name, data)
 
 class CreateCategory(CreateView):
     model=Category

@@ -1,0 +1,44 @@
+{% extends "base.html"%}
+{% block  body %}
+    This is a test of the data that will be display
+    <div class="row">
+      <div class=" col expenses">
+        <table class="table">
+          <tr>
+            <th>Category</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Date</th>
+          </tr>
+          {% for expense in expenses %}
+          <tr>
+            <td>{{expense.categories}}</td>
+            <td>{{expense.description}}</td>
+            <td>{{expense.price}}</td>
+            <td>{{expense.data}}</td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+      <div class="col categories">
+        <table class="table">
+          <tr>
+            <th>name</th>
+            <th>amount</th>
+            <th>circle repetition</th>
+            <th>status</th>
+          </tr>
+          {% for category in categories %}
+          <tr>
+            <td>{{category.name}}</td>
+            <td>{{category.expense}}</td>
+            <td>{{category.circle_repetition}}</td>
+            <td>okay | bad</td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+  </div>
+  <span class="btn btn-primary"><a href="{% url 'expenses.category' %}">Add Category</a></span>
+  <span class="btn btn-success"><a href="{% url 'expense.add' %}">Add expense</a></span>
+  {% endblock %}

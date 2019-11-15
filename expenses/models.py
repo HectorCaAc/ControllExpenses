@@ -20,6 +20,9 @@ class Category(models.Model):
             }
         )
 
+    def __str__(self):
+        return self.name
+
 
 class Expenses(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
