@@ -29,7 +29,11 @@
             <th>status</th>
           </tr>
           {% for category in categories %}
-          <tr>
+          {% if category.surplus %}
+          <tr style="background-color:green;">
+          {% else %}
+          <tr style="background-color:red;">>
+          {% endif %}
             <td>{{category.name}}</td>
             <td>{{category.expense}}</td>
             <td>{{category.circle_repetition}}</td>
