@@ -1,6 +1,8 @@
 {% extends "base.html"%}
 {% block  body %}
-    This is a test of the data that will be display
+    <span class="btn btn-primary"><a style="color:white;" href="{% url 'expenses:category' %}">Add Category</a></span>
+    <span class="btn btn-success"><a style="color:white;" href="{% url 'expenses:add' %}">Add Entry</a></span>
+    <span class="btn btn-success"><a style="color:white;" href="{% url 'expenses:income' %}">Add Expense</a></span>
     <div class="row">
       <div class=" col expenses">
         <table class="table">
@@ -12,37 +14,57 @@
           </tr>
           {% for expense in expenses %}
           <tr>
-            <td>{{expense.categories}}</td>
+            <td>{{expense.category}}</td>
             <td>{{expense.description}}</td>
             <td>{{expense.price}}</td>
-            <td>{{expense.data}}</td>
+            <td>{{expense.date}}</td>
           </tr>
           {% endfor %}
         </table>
       </div>
       <div class="col categories">
+        <h3>Expenses</h3>
         <table class="table">
           <tr>
-            <th>name</th>
-            <th>amount</th>
-            <th>circle repetition</th>
-            <th>status</th>
+            <th>Name</th>
+            <th>Amount</th>
+            <th>Circle repetition</th>
+            <th>Next circle</th>
+            <th>Ammount Available</th>
           </tr>
           {% for category in categories %}
-          {% if category.surplus %}
-          <tr style="background-color:green;">
+          {% if category.deficit %}
+          <tr style="background-color:red;">
           {% else %}
-          <tr style="background-color:red;">>
+          <tr style="background-color:green;">>
           {% endif %}
             <td>{{category.name}}</td>
             <td>{{category.expense}}</td>
             <td>{{category.circle_repetition}}</td>
-            <td>okay | bad</td>
+            <td>{{category.current_circle}}</td>
+            <td>{{category.spend_available}}</td>
           </tr>
           {% endfor %}
         </table>
+        <h3>Income</h3>
+        <table class="table">
+            <tr>
+              <th>Description</th>
+              <th>next entry</th>
+              <th>Amount</th>
+            </tr>
+            {% for entry_income in income %}
+            <tr>
+              <td>{{entry_income.description}}</td>
+              {% if entry_income %}
+              <td> {{ entry_income.current_circle}}</td>
+              {% else %}
+              <td> NO more entry </td>
+              {% endif %}
+              <td>{{entry_income.amount}}</td>
+            </tr>
+            {% endfor %}
+        </table>
       </div>
   </div>
-  <span class="btn btn-primary"><a style="color:white;" href="{% url 'expenses:category' %}">Add Category</a></span>
-  <span class="btn btn-success"><a style="color:white;" href="{% url 'expenses:add' %}">Add expense</a></span>
   {% endblock %}

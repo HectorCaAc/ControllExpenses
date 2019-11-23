@@ -1,15 +1,14 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
+{% extends "base.html" %}
+{% block body %}
     There was a new expense add to the db
     <form class=""  method="POST">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit" name="button">Register new Button</button>
+      <div class="form-group">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-secondary" type="submit"
+                name="button">
+          Register new entry
+        </button>
+      </div>
     </form>
-  </body>
-</html>
+{% endblock %}

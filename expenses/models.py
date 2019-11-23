@@ -15,7 +15,8 @@ class Category(models.Model):
     circle_repetition = models.IntegerField()
     name=models.CharField(max_length=255)
     current_circle = models.IntegerField(default=0)
-    surplus = models.BooleanField(default=True)
+    deficit = models.BooleanField(default=True)
+    spend_available = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
 
     def get_absolute_url(self):
         return reverse(
@@ -24,6 +25,7 @@ class Category(models.Model):
                 'user':self.user.id
             }
         )
+
     def __str__(self):
         return self.name
 
@@ -31,28 +33,34 @@ class Category(models.Model):
         days_left = self.current_circle -1
         if days_left == -1:
             days_left = self.circle_repetition
+            self.spend_available = self.expense
+            self.deficit = False
         self.current_circle = days_left
         self.save()
 
-    def update_status(self):
+    def new_spend(self):
         current_start_circle = self.circle_repetition - self.current_circle
         start_circle = timezone.now()-timedelta(days=current_start_circle)
-        expenses = Expenses.objects.filter(user=self.user, data__gte=start_circle )
-        total_expense = 0
-        surplus = True
+        expenses = Entry.objects.filter(user=self.user,
+                                            date__gte=start_circle,
+                                            category=  self.pk)
+        spend_circle = 0
+        surplus = False
         for expense in expenses:
-            total_expense += expense.price
-        if total_expense > self.expense:
-            surplus = False
-        self.surplus = surplus
+            spend_circle += expense.price
+        print('{} and expense {} total {}'.format(self.name, self.expense,spend_circle))
+        if spend_circle > self.expense:
+            surplus = True
+        self.deficit = surplus
+        self.spend_available = self.expense - spend_circle
         self.save()
 
-class Expenses(models.Model):
+class Entry(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    categories = models.ForeignKey('Category',on_delete=models.CASCADE)
+    category = models.ForeignKey('Category',on_delete=models.CASCADE)
     description = models.CharField(max_length=255)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    data = models.DateField(auto_now=True)
+    date = models.DateField(auto_now=True)
 
     def get_absolute_url(self):
         return reverse(
@@ -61,6 +69,31 @@ class Expenses(models.Model):
                 'user':self.user.id
             }
         )
+
     def save(self, *args, **kwargs):
-        self.categories.update_status()
-        super(Expenses,self).save()
+        super(Entry,self).save()
+        self.category.new_spend()
+
+class Income(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    circle_repetition = models.IntegerField()
+    current_circle = models.IntegerField(default=0)
+    repition = models.BooleanField(null=True)
+    description = models.CharField(max_length=255)
+    amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+
+    def next_cycle(self):
+        if self.repition:
+            days_left = self.current_circle -1
+            if days_left == -1:
+                days_left = self.circle_repetition
+            self.current_circle = days_left
+            self.save()
+
+    def get_absolute_url(self):
+        return reverse(
+            'expenses:person_expenses',
+            kwargs={
+                'user':self.user.id
+            }
+        )
