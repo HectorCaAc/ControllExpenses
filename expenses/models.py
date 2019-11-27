@@ -2,11 +2,12 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
 from django.utils import timezone
-
 from datetime import timedelta
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
+
+from account.models import CustomUser
 
 #There are some categories that are the same expense ex insurance
 class Category(models.Model):
@@ -20,10 +21,7 @@ class Category(models.Model):
 
     def get_absolute_url(self):
         return reverse(
-            'expenses:person_expenses',
-            kwargs={
-                'user':self.user.id
-            }
+            'expenses:person_expenses'
         )
 
     def __str__(self):
@@ -64,14 +62,14 @@ class Entry(models.Model):
 
     def get_absolute_url(self):
         return reverse(
-            'expenses:person_expenses',
-            kwargs={
-                'user':self.user.id
-            }
+            'expenses:person_expenses'
         )
 
     def save(self, *args, **kwargs):
         super(Entry,self).save()
+        customerUser = CustomUser.objects.get(user=self.user)
+        customerUser.current_balance -= self.price
+        customerUser.save()
         self.category.new_spend()
 
 class Income(models.Model):
@@ -93,7 +91,10 @@ class Income(models.Model):
     def get_absolute_url(self):
         return reverse(
             'expenses:person_expenses',
-            kwargs={
-                'user':self.user.id
-            }
         )
+
+    def save(self, *args, **kwargs):
+        super(Income, self).save()
+        customerUser = CustomUser.objects.get(user=self.user)
+        customerUser.current_balance += self.amount
+        customerUser.save()
