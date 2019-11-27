@@ -15,10 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path, include
-
+from expenses.views import TodoList
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     re_path(r'^user/',include('account.urls')),
-    re_path(r'^expenses/',include('expenses.urls'))
+    re_path(r'^expenses/',include('expenses.urls')),
+    re_path(r'^report',include('reports.urls')),
+    re_path('',TodoList)
 ]
