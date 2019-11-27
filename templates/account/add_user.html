@@ -1,15 +1,9 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>add user</title>
-  </head>
-  <body>
-    TEST
+{% extends "base.html"%}
+{% block  body %}
+    <h3>Form to add user</h3>
     <form  method="POST">
       {% csrf_token %}
       {{ form.as_p }}
-      <button type='submit'>Submit !</button>
+      <button class="btn btn-secondary" type='submit'>Submit !</button>
     </form>
-  </body>
-</html>
+{% endblock %}

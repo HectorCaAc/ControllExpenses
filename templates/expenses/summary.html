@@ -3,6 +3,12 @@
     <span class="btn btn-primary"><a style="color:white;" href="{% url 'expenses:category' %}">Add Category</a></span>
     <span class="btn btn-success"><a style="color:white;" href="{% url 'expenses:add' %}">Add Entry</a></span>
     <span class="btn btn-success"><a style="color:white;" href="{% url 'expenses:income' %}">Add Expense</a></span>
+    <span class="btn btn-success"><a style="color:white;" href="{% url 'accounts:log_out' %}">Log out</a></span>
+    {% if balance > 0 %}
+    <span class="btn btn-success"><a style="color:white;" href="{% url 'accounts:log_out' %}">{{balance}}</a></span>
+    {% else %}
+    <span class="btn btn-danger"><a style="color:white;" href="{% url 'accounts:log_out' %}">{{balance}}</a></span>
+    {% endif %}
     <div class="row">
       <div class=" col expenses">
         <table class="table">

@@ -1,28 +1,27 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Person Expenses</title>
-  </head>
-  <body>
+{% extends "base.html" %}
+{% block body %}
     <h3>This is a really simple web application at the moment</h3>
     <p>But with hard work and time it can get me a nice job </p>
     <p>if I applie myself and also if I make it look nice</p>
 
     <h3>Things to do </h3>
-    <ul>
-      <li>Add an app that will control all the app, and use cronos to auto make the tasks</li>
-      <li>Add pandas to the project, to manage mean, variable and more </li>
-      <li>Because this project will use as a good example of my skills include testing</li>
-      <li>Be able to organize by categories and expenses</li>
-      <li>show the current 10 but be able to display more</li>
-      <li>make sure that values inside of price can only be positive(back end or front end)</li>
-      <li>It is required to add some script that will allow me to create dummy data</li>
-      <li>For now the user and the categories are all mixed, but in the future it will be just the user</li>
-      <li>At this moment both models have the same get absolute url, change that it is ugly code (I think)</li>
-      <li>Be able to use the class base views to create users</li>
-      <li>Authentication and authorization</li>
-      <li>Add React. To be more specific the victory library</li>
-    </ul>
-  </body>
-</html>
+    <div class="row">
+      <div class="col">
+        <ul>
+          <li>Add Button to delete income, category and entry</li>
+          <li>Add an app that will control all the app, and use cronos to auto make the tasks</li>
+          <li>Add pandas to the project, to manage mean, variable and more </li>
+          <li>Because this project will use as a good example of my skills include testing</li>
+          <li>Be able to organize by categories and expenses</li>
+          <li>show the current 10 but be able to display more</li>
+          <li>make sure that values inside of price can only be positive(back end or front end)</li>
+          <li>It is required to add some script that will allow me to create dummy data</li>
+          <li>At this moment both models have the same get absolute url, change that it is ugly code (I think)</li>
+          <li>Add React. To be more specific the victory library</li>
+          <li>To reduce number of clicks to sig up data try to register the categories and if there is any income from the start</li>
+        </ul>
+      </div>
+    </div>
+    <span type="submit"><a href="{% url 'accounts:sign_up' %}">singup</a></span>
+    <span type="submit"><a href="{% url 'accounts:log_in' %}">Log in</a> </span>
+{% endblock %}
