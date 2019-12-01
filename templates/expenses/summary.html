@@ -1,76 +1,121 @@
 {% extends "base.html"%}
+{% load static %}
 {% block  body %}
-    <span class="btn btn-primary"><a style="color:white;" href="{% url 'expenses:category' %}">Add Category</a></span>
-    <span class="btn btn-success"><a style="color:white;" href="{% url 'expenses:add' %}">Add Entry</a></span>
-    <span class="btn btn-success"><a style="color:white;" href="{% url 'expenses:income' %}">Add Expense</a></span>
-    <span class="btn btn-success"><a style="color:white;" href="{% url 'accounts:log_out' %}">Log out</a></span>
-    {% if balance > 0 %}
-    <span class="btn btn-success"><a style="color:white;" href="{% url 'accounts:log_out' %}">{{balance}}</a></span>
-    {% else %}
-    <span class="btn btn-danger"><a style="color:white;" href="{% url 'accounts:log_out' %}">{{balance}}</a></span>
-    {% endif %}
-    <div class="row">
-      <div class=" col expenses">
-        <table class="table">
-          <tr>
-            <th>Category</th>
-            <th>Description</th>
-            <th>Price</th>
-            <th>Date</th>
-          </tr>
-          {% for expense in expenses %}
-          <tr>
-            <td>{{expense.category}}</td>
-            <td>{{expense.description}}</td>
-            <td>{{expense.price}}</td>
-            <td>{{expense.date}}</td>
-          </tr>
-          {% endfor %}
-        </table>
+<div class="modal fade" id="delete-entries" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4>Delete Category </h4>
       </div>
-      <div class="col categories">
-        <h3>Expenses</h3>
-        <table class="table">
-          <tr>
-            <th>Name</th>
-            <th>Amount</th>
-            <th>Circle repetition</th>
-            <th>Next circle</th>
-            <th>Ammount Available</th>
-          </tr>
-          {% for category in categories %}
-          {% if category.deficit %}
-          <tr style="background-color:red;">
-          {% else %}
-          <tr style="background-color:green;">>
-          {% endif %}
-            <td>{{category.name}}</td>
-            <td>{{category.expense}}</td>
-            <td>{{category.circle_repetition}}</td>
-            <td>{{category.current_circle}}</td>
-            <td>{{category.spend_available}}</td>
-          </tr>
-          {% endfor %}
-        </table>
-        <h3>Income</h3>
-        <table class="table">
+      <div class="modal-body">
+        <h3 id ="modal-category">Delete all the entries for the category "</h3>
+        <input id="delete_entries" type="checkbox" value="YES">
+        <label for="YES"> Yes</label>
+        <div class="note" style="margin:10px;">
+          * It will remove all the entries belonging to this category
+           and it will restore that money to the current balance.
+        </div>
+
+        <h5>Do you wanted to continue with the deletion of this category</h5>
+        <div class="">
+          <input class="btn btn-danger" id="delete_category" type="button" value="Delete Category">
+          <input class="btn btn-warning" type="button" value="Cancell Operation" data-dismiss="modal">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="header">
+  <span class="btn btn-primary"><a style="color:white;" href="{% url 'expenses:category' %}">Add Category</a></span>
+  <span class="btn btn-success"><a style="color:white;" href="{% url 'expenses:add' %}">Add Entry</a></span>
+  <span class="btn btn-success"><a style="color:white;" href="{% url 'expenses:income' %}">Add Income</a></span>
+  <span class="btn btn-success"><a style="color:white;" href="{% url 'accounts:log_out' %}">Log out</a></span>
+  <div class="balance">
+    <h3>Current Balance of user {{user.get_username}}</h3>
+    {% if balance > 0 %}
+    <div class="btn btn-success" id="current_balance">$ {{balance}}</div>
+    {% else %}
+    <div class="btn btn-danger" id="current_balance">$ {{balance}}</div>
+    {% endif %}
+  </div>
+</div>
+    <div class="row">
+      <div class=" col">
+        <div class="panel table-responsive">
+          <h3>Entries</h3>
+          <table class="table">
             <tr>
+              <th>Category</th>
               <th>Description</th>
-              <th>next entry</th>
-              <th>Amount</th>
+              <th>Price</th>
+              <th>Date</th>
             </tr>
-            {% for entry_income in income %}
-            <tr>
-              <td>{{entry_income.description}}</td>
-              {% if entry_income %}
-              <td> {{ entry_income.current_circle}}</td>
-              {% else %}
-              <td> NO more entry </td>
-              {% endif %}
-              <td>{{entry_income.amount}}</td>
+            {% for expense in expenses %}
+            <tr data-category-id="{{expense.category.id}}">
+              <td>{{expense.category}}</td>
+              <td>{{expense.description}}</td>
+              <td>{{expense.price}}</td>
+              <td>{{expense.date}}</td>
             </tr>
             {% endfor %}
-        </table>
+          </table>
+        </div>
+        <div class="row">
+          <div class ="col">
+            <div class="panel table-responsive">
+              <h3>Income</h3>
+              <table class="table">
+                  <tr>
+                    <th>Description</th>
+                    <th>next entry</th>
+                    <th>Amount</th>
+                  </tr>
+                  {% for entry_income in income %}
+                  <tr>
+                    <td>{{entry_income.description}}</td>
+                    {% if entry_income %}
+                    <td> {{ entry_income.current_circle}}</td>
+                    {% else %}
+                    <td> NO more entry </td>
+                    {% endif %}
+                    <td>{{entry_income.amount}}</td>
+                  </tr>
+                  {% endfor %}
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
-  </div>
+      <div class="col">
+        <div class="panel table-responsive" id="Budget">
+          <h3>Budget</h3>
+          <table class="table">
+            <tr>
+              <th>Name</th>
+              <th>Amount</th>
+              <th>Circle repetition</th>
+              <th>Next circle</th>
+              <th>Ammount Available</th>
+              <th></th>
+            </tr>
+            {% for category in categories %}
+            {% if category.deficit %}
+            <tr style="background-color:red;" data-row-id="{{category.id}}">
+            {% else %}
+            <tr style="background-color:green;" data-row-id="{{category.id}}">
+            {% endif %}
+              <td>{{category.name}}</td>
+              <td>{{category.expense}}</td>
+              <td>{{category.circle_repetition}}</td>
+              <td>{{category.current_circle}}</td>
+              <td>{{category.spend_available}}</td>
+              <td><span id="test" class="btn btn-warning delete-target" data-name="{{category.name}}" data-id="{{category.id}}">-</span>
+              </td>
+            </tr>
+            {% endfor %}
+          </table>
+        </div>
+      </div>
+    </div>
+    <script src="{% static "javascript/message.js" %}" type="module"></script>
   {% endblock %}

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import View
 from django.views.generic.edit import FormView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -36,22 +36,35 @@ class CreateCategory(LoginRequiredMixin, CreateView):
     log_in='user/login'
     model = Category
     template_name = 'expenses/create_category.html'
-    fields = ['expense','circle_repetition','user','name']
+    fields = ['expense','circle_repetition','name']
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.instance.spend_available = form.instance.expense
+        form.instance.current_circle = form.instance.circle_repetition
+        return super().form_valid(form)
 
 class AddEntry(LoginRequiredMixin, CreateView):
     model = Entry
     template_name = 'expenses/add.html'
-    fields = ('user','category','description','price')
+    fields = ('category','description','price')
     log_in='user/login'
 
     def form_valid(self, form):
-        print('********')
-        print(form)
-        print('********')
+        form.instance.user = self.request.user
         return super().form_valid(form)
 
 class AddIncome(LoginRequiredMixin, CreateView):
     model = Income
     template_name ='income/add.html'
-    fields = ('user', 'circle_repetition', 'repition', 'description', 'amount')
+    fields = ('circle_repetition', 'repition', 'description', 'amount')
     log_in='user/login'
+
+    def form_valid(self, form):
+        print('BEFORE')
+        print(form.cleaned_data)
+        form.instance.user = self.request.user
+        form.instance.current_circle = form.instance.circle_repetition
+        print('AFTER')
+        print(form.cleaned_data)
+        return super().form_valid(form)
