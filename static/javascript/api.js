@@ -34,11 +34,28 @@ function create_income(){
 }
 
 function delete_category(category_id){
-  let url = '/api/expenses/delete/';
-  let csrf = getCookie('csrftoken');
+  let url = '/api/category/delete/';
   let data={
     id_category: category_id
+  };
+  send_post(url, data);
+}
+
+function delete_entries(ids){
+  let url='/api/expenses/delete/';
+  let data={
+    expenses_id: ids
   }
+  send_post(url, data);
+}
+
+function delete_income(){
+
+}
+
+function send_post(url, data){
+  console.log(url);
+  let csrf = getCookie('csrftoken');
   fetch(url,{
     method:"POST",
     credentials:"same-origin",
@@ -56,14 +73,6 @@ function delete_category(category_id){
     console.log(response);
   })
 }
-
-function delete_entries(ids){
-  console.log("entries that are going to delete");
-  console.log(ids);
-}
-
-function delete_income(){
-
-}
-
-export {delete_category, create_entry}
+export {delete_category,
+        create_entry,
+        delete_entries}

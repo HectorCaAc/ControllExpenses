@@ -55,7 +55,7 @@ class Category(models.Model):
 
 class Entry(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    category = models.ForeignKey('Category',on_delete=models.CASCADE)
+    category = models.ForeignKey('Category', null=True, on_delete=models.SET_NULL)
     description = models.CharField(max_length=255)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     date = models.DateField(auto_now=True)

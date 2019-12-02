@@ -51,7 +51,7 @@
               <th>Date</th>
             </tr>
             {% for expense in expenses %}
-            <tr data-category-id="{{expense.category.id}}">
+            <tr data-expense-id="{{expense.id}}" data-category-id="{{expense.category.id}}">
               <td>{{expense.category}}</td>
               <td>{{expense.description}}</td>
               <td>{{expense.price}}</td>

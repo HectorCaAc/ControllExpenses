@@ -22,6 +22,6 @@ urlpatterns = [
     re_path(r'^user/',include('account.urls')),
     re_path(r'^expenses/',include('expenses.urls')),
     re_path(r'^report',include('reports.urls')),
-    re_path(r'^api/expenses/',include('expenses.api_url')),
+    re_path(r'^api/',include('expenses.api_url')),
     re_path('',TodoList)
 ]
