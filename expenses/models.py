@@ -16,16 +16,16 @@ class Category(models.Model):
     circle_repetition = models.IntegerField()
     name=models.CharField(max_length=255)
     current_circle = models.IntegerField(default=0)
-    deficit = models.BooleanField(default=True)
+    deficit = models.BooleanField(default=False)
     spend_available = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+
+    def __str__(self):
+        return self.name        
 
     def get_absolute_url(self):
         return reverse(
             'expenses:person_expenses'
         )
-
-    def __str__(self):
-        return self.name
 
     def next_cycle(self):
         days_left = self.current_circle -1

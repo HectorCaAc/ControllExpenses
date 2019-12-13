@@ -2,7 +2,9 @@ from django.shortcuts import render, redirect
 from django.views.generic import View
 from django.views.generic.edit import FormView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+
 from expenses.models import Category, Entry, Income
+from expenses.forms import EntryForm
 from account.models import CustomUser
 
 # Create your views here.
@@ -45,14 +47,19 @@ class CreateCategory(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 class AddEntry(LoginRequiredMixin, CreateView):
-    model = Entry
-    template_name = 'expenses/add.html'
-    fields = ('category','description','price')
+    form_class = EntryForm
     log_in='user/login'
+    template_name = 'expenses/add.html'
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        return super().form_valid(form)
+        # form.instance.category = Category.objects.filter(user= self.request.user)
+        return super(CreateView, self).form_valid(form)
+
+    def get_form_kwargs(self):
+        kwargs = super(AddEntry, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
 
 class AddIncome(LoginRequiredMixin, CreateView):
     model = Income
@@ -61,10 +68,7 @@ class AddIncome(LoginRequiredMixin, CreateView):
     log_in='user/login'
 
     def form_valid(self, form):
-        print('BEFORE')
         print(form.cleaned_data)
         form.instance.user = self.request.user
         form.instance.current_circle = form.instance.circle_repetition
-        print('AFTER')
-        print(form.cleaned_data)
         return super().form_valid(form)
