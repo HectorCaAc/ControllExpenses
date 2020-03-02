@@ -11,14 +11,18 @@ from account.models import CustomUser
 def TodoList(request):
     return render(request,'person_expenses.html')
 
-class PersonData(LoginRequiredMixin, View):
-    model = Entry
+class PersonData(LoginRequiredMixin, FormView):
     template_name = 'expenses/summary.html'
     log_in='user/login'
+    success_url = 'expenses/user/'
+    fields = ('circle_repetition', 'repition', 'description', 'amount')
+    form_class = EntryForm
 
-    def post(self, request):
-        print("Data in this part of the project")
-        pass
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST, user=request.user)
+        if self.form_valid(form):
+                form.save()
+        return self.get(request)
 
     def get(self, request):
         user = request.user
@@ -30,7 +34,32 @@ class PersonData(LoginRequiredMixin, View):
             'categories':categories,
             'expenses':expenses,
             'income':income,
-            'balance': balance
+            'balance': balance,
+            'form': self.form_class(user=user)
+        }
+        return render(request, self.template_name, data)
+
+    def form_valid(self, form):
+        print(form)
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+class Summary(View):
+    template_name = 'expenses/report.html'
+
+    def get(self, request):
+        user = request.user
+        balance = CustomUser.objects.get(user=user).current_balance
+        last_income = 'TODO'
+        next_income = 'TODO'
+        last_entry = Entry.objects.filter(user=user).order_by('-id').last()
+        data={
+            'last_entry':last_entry,
+            'balance':balance,
+            'last_income': 'TODO',
+            'next_income': 'TODO',
+            'last_expense': last_entry,
+            'next_expense': 'TODO'
         }
         return render(request, self.template_name, data)
 
@@ -66,6 +95,11 @@ class AddIncome(LoginRequiredMixin, CreateView):
     template_name ='income/add.html'
     fields = ('circle_repetition', 'repition', 'description', 'amount')
     log_in='user/login'
+
+    def get(self,*args, **kwargs):
+        print(args)
+        print(kwargs)
+        return super().get(*args, **kwargs)
 
     def form_valid(self, form):
         print(form.cleaned_data)

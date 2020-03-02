@@ -1,5 +1,5 @@
 body{
-  background-color: #f2f2f2;
+  /* background-color: #f2f2f2; */
 }
 
 .header{
@@ -11,6 +11,38 @@ body{
   border: 3px black solid;
   border-radius: 5px;
 }
+
+.nav-bar{
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Times New Roman', Times, serif;
+  height: 10vh;
+  position: sticky;
+}
+
+.nav-bar a{
+  color: inherit;
+}
+
+.options{
+  padding: 0% 3% 0% 3%;
+}
+.options ul {
+  list-style-type: none;
+}
+
+.options ul li {
+  display: inline;
+  margin: 10px;
+  padding: 10px;
+  color: inherit;
+}
+
+ul li:hover {
+  box-shadow: 3px 2px 3px 0px;
+  color: inherit;
+}
+
 @media screen and (max-width:875px){
   .panel{
     height: auto;
