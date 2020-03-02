@@ -1,0 +1,60 @@
+{% extends "base.html"%}
+{% block body %}
+{% load static %}
+<div class="modal fade" id="delete-entries" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4>Delete Category </h4>
+      </div>
+      <div class="modal-body">
+        <h3 id="modal-category">Delete all the entries for the category "</h3>
+        <input id="delete_entries" type="checkbox" value="YES">
+        <label for="YES"> Yes</label>
+        <div class="note" style="margin:10px;">
+          * It will remove all the entries belonging to this category
+          and it will restore that money to the current balance.
+        </div>
+
+        <h5>Do you wanted to continue with the deletion of this category</h5>
+        <div class="">
+          <input class="btn btn-danger" id="delete_category" type="button" value="Delete Category">
+          <input class="btn btn-warning" type="button" value="Cancell Operation" data-dismiss="modal">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col">
+    <div class="panel table-responsive" id="Budget">
+      <h3>Budget</h3>
+      <table class="table">
+        <tr>
+          <th>Name</th>
+          <th>Amount</th>
+          <th>Circle repetition</th>
+          <th>Next circle</th>
+          <th>Ammount Available</th>
+          <th></th>
+        </tr>
+        {% for category in category_list %}
+        {% if category.deficit %}
+        <tr style="background-color:red;" data-row-id="{{category.id}}">
+          {% else %}
+        <tr style="background-color:green;" data-row-id="{{category.id}}">
+          {% endif %}
+          <td>{{category.name}}</td>
+          <td>{{category.expense}}</td>
+          <td>{{category.circle_repetition}}</td>
+          <td>{{category.current_circle}}</td>
+          <td>{{category.spend_available}}</td>
+          <td><span id="test" class="btn btn-warning delete-target" data-name="{{category.name}}"
+              data-id="{{category.id}}">-</span>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+{% endblock %}

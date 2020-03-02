@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic import View
 from django.views.generic.edit import FormView, CreateView
+from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from expenses.models import Category, Entry, Income
@@ -44,7 +45,7 @@ class PersonData(LoginRequiredMixin, FormView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-class Summary(View):
+class Summary(LoginRequiredMixin, View):
     template_name = 'expenses/report.html'
 
     def get(self, request):
@@ -74,6 +75,15 @@ class CreateCategory(LoginRequiredMixin, CreateView):
         form.instance.spend_available = form.instance.expense
         form.instance.current_circle = form.instance.circle_repetition
         return super().form_valid(form)
+
+class Category(LoginRequiredMixin, ListView):
+    model = Category
+    template_name = 'expenses/category.html'
+
+    def get_queryset(self):
+        query_set = super().get_queryset()
+        query_set = query_set.filter(user=self.request.user)
+        return query_set
 
 class AddEntry(LoginRequiredMixin, CreateView):
     form_class = EntryForm
