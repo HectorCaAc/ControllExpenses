@@ -3,7 +3,7 @@ from expenses import views
 
 app_name='expenses'
 urlpatterns = [
-    re_path(r'category/$', views.Category.as_view(), name='category'),
+    re_path(r'category/$', views.CategoryListView.as_view(), name='category'),
     re_path(r'add/$', views.AddEntry.as_view(), name="add"),
     # re_path(r'user/(?P<user>\d+)/$', views.PersonData.as_view(), name='person_expenses'),
     re_path(r'user/', views.PersonData.as_view(), name='person_expenses'),

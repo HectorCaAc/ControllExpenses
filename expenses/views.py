@@ -28,11 +28,11 @@ class PersonData(LoginRequiredMixin, FormView):
     def get(self, request):
         user = request.user
         balance = CustomUser.objects.get(user=user).current_balance
-        categories= Category.objects.filter(user=user)
+        categories = Category.objects.filter(user=user)
         expenses = Entry.objects.filter(user=user)
         income = Income.objects.filter(user=user)
         data = {
-            'categories':categories,
+            # 'categories':categories,
             'expenses':expenses,
             'income':income,
             'balance': balance,
@@ -76,7 +76,7 @@ class CreateCategory(LoginRequiredMixin, CreateView):
         form.instance.current_circle = form.instance.circle_repetition
         return super().form_valid(form)
 
-class Category(LoginRequiredMixin, ListView):
+class CategoryListView(LoginRequiredMixin, ListView):
     model = Category
     template_name = 'expenses/category.html'
 
