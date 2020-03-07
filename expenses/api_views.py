@@ -23,6 +23,7 @@ def delete_category(request):
         message = "The category can not be delete"
         print(message)
         return Response({"message":message}, status=status.HTTP_403_FORBIDDEN)
+
 @api_view(['POST'])
 def delete_entries(request):
     data = request.data['expenses_id']
@@ -36,3 +37,7 @@ def delete_entries(request):
     user.save()
     message ="Entries delete"
     return Response({"message":message}, status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+def add_entry(request):
+    print('THE ADD ENTRY API IS NOT DONE YET, IT WILL BE DONE WHEN REACT IS ADDED TO THE PROGRAM OTHER WISE IS A WASE OF TIME')

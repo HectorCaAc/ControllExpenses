@@ -6,6 +6,7 @@ from django.views.generic import View
 from django.views.generic.edit import FormView, CreateView
 from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 
 from expenses.models import Category, Entry, Income
 from expenses.forms import EntryForm
@@ -30,7 +31,10 @@ class PersonData(LoginRequiredMixin, FormView):
 
     def get(self, request):
         user = request.user
-        balance = CustomUser.objects.get(user=user).current_balance
+        balance = CustomUser.objects.filter(user=user)
+        if not balance.exists():
+            return redirect('/')
+        balance = balance.first().current_balance
         categories = Category.objects.filter(user=user)
         expenses = Entry.objects.filter(user=user)
         income = Income.objects.filter(user=user)
@@ -119,6 +123,18 @@ class AddEntry(LoginRequiredMixin, CreateView):
         kwargs = super(AddEntry, self).get_form_kwargs()
         kwargs['user'] = self.request.user
         return kwargs
+
+class AddEntryAPI(LoginRequiredMixin, View):
+    
+    def post(self, request):
+        form = EntryForm(request.POST, user=request.user)
+        form.instance.user = request.user
+        if form.is_valid():
+            print('The entry is a valid entry')
+            form.save()
+        else:
+            print('It was not possible to store the entry')
+        return redirect('/expenses/user/')
 
 class AddIncome(LoginRequiredMixin, CreateView):
     model = Income

@@ -9,6 +9,6 @@ class EntryForm (forms.ModelForm):
         fields = ['category','description','price']
 
     def __init__(self, *args, **kwargs):
-        user = kwargs.pop('user')
+        self.user = kwargs.pop('user')
         super(EntryForm, self).__init__(*args, **kwargs)
-        self.fields['category'].queryset = Category.objects.filter(user=user)
+        self.fields['category'].queryset = Category.objects.filter(user=self.user)

@@ -16,7 +16,7 @@
   </div>
   <div class="element">
     <h2>Add Entry</h2>
-    <form action="{% url 'expenses:person_expenses'%}" method="POST">
+    <form action="{% url 'expenses:add'%}" method="POST">
       {% csrf_token %}
       {{ form.as_p }}
       <input class="btn btn-primary" type="submit">

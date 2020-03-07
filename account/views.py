@@ -19,7 +19,8 @@ def CreateUser(request):
             add_customer.save()
             return redirect('accounts:log_in')
     else:
-        print('Create new user')
+        if request.user.is_authenticated:
+            return redirect('/expenses/user/')
         form = CreateUserForm()
     return render(request, 'account/add_user.html', {'form':form})
 
@@ -37,6 +38,9 @@ def LogIn(request):
         else:
             print('The form is not valid')
     else:
+        user = request.user
+        if user.is_authenticated:
+            return redirect('/expenses/user/')
         form = LogInForm()
     return render(request, 'account/login.html',{'form':form})
 
