@@ -79,7 +79,7 @@ class Income(models.Model):
     repition = models.BooleanField(null=True)
     description = models.CharField(max_length=255)
     amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
-
+    date = models.DateField(auto_now=True)
     def next_cycle(self):
         if self.repition:
             days_left = self.current_circle -1
@@ -87,6 +87,11 @@ class Income(models.Model):
                 days_left = self.circle_repetition
             self.current_circle = days_left
             self.save()
+
+    def save(self, *args, **kwargs):
+       super(Income, self).save()
+       user.last_income = self
+       user.save()
 
     def get_absolute_url(self):
         return reverse(
@@ -98,3 +103,8 @@ class Income(models.Model):
         customerUser = CustomUser.objects.get(user=self.user)
         customerUser.current_balance += self.amount
         customerUser.save()
+
+    def __str__(self):
+        return '{} days_next_income | {} description | {} amount'.format(self.current_circle,
+                                                                        self.description,
+                                                                        self.amount )

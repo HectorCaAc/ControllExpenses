@@ -1,6 +1,9 @@
-{% extends "base.html"%}
-{% block body %}
+{% extends "base.html" %}
 {% load static %}
+{% block header %}
+<link rel="stylesheet" href="{% static 'css\category.css'%}">
+{% endblock %}
+{% block body %}
 <div class="modal fade" id="delete-entries" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true">
   <div class="modal-dialog">
@@ -26,6 +29,16 @@
     </div>
   </div>
 </div>
+<div class="header">
+  <div class="summary">
+
+  </div>
+  <div class="options">
+
+  </div>
+
+</div>
+
 <div class="col">
     <div class="panel table-responsive" id="Budget">
       <h3>Budget</h3>

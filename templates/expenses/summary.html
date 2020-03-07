@@ -26,16 +26,6 @@
 <div class="header">
   <span class="btn btn-primary"><a style="color:white;" href="{% url 'expenses:category' %}">Add Category</a></span>
   <span class="btn btn-success"><a style="color:white;" href="{% url 'expenses:add' %}">Add Entry</a></span>
-  <span class="btn btn-success"><a style="color:white;" href="{% url 'expenses:income' %}">Add Income</a></span>
-  <span class="btn btn-success"><a style="color:white;" href="{% url 'accounts:log_out' %}">Log out</a></span>
-  <div class="balance">
-    <h3>Current Balance of user {{user.get_username}}</h3>
-    {% if balance > 0 %}
-    <div class="btn btn-success" id="current_balance">$ {{balance}}</div>
-    {% else %}
-    <div class="btn btn-danger" id="current_balance">$ {{balance}}</div>
-    {% endif %}
-  </div>
 </div>
 <div class="row">
   <div class=" col">
@@ -58,33 +48,8 @@
         {% endfor %}
       </table>
     </div>
-    <div class="row">
-      <div class="col">
-        <div class="panel table-responsive">
-          <h3>Income</h3>
-          <table class="table">
-            <tr>
-              <th>Description</th>
-              <th>next entry</th>
-              <th>Amount</th>
-            </tr>
-            {% for entry_income in income %}
-            <tr>
-              <td>{{entry_income.description}}</td>
-              {% if entry_income %}
-              <td> {{ entry_income.current_circle}}</td>
-              {% else %}
-              <td> NO more entry </td>
-              {% endif %}
-              <td>{{entry_income.amount}}</td>
-            </tr>
-            {% endfor %}
-          </table>
-        </div>
-      </div>
-    </div>
   </div>
  
 </div>
-<script src="{% static "javascript/message.js" %}" type="module"></script>
+<script src="{% static 'javascript/message.js' %}" type="module"></script>
 {% endblock %}

@@ -1,3 +1,6 @@
+from datetime import timedelta, datetime
+
+from django.utils import timezone
 from django.shortcuts import render, redirect
 from django.views.generic import View
 from django.views.generic.edit import FormView, CreateView
@@ -10,7 +13,7 @@ from account.models import CustomUser
 
 # Create your views here.
 def TodoList(request):
-    return render(request,'person_expenses.html')
+    return render(request,'index.html')
 
 class PersonData(LoginRequiredMixin, FormView):
     template_name = 'expenses/summary.html'
@@ -48,17 +51,34 @@ class PersonData(LoginRequiredMixin, FormView):
 class Summary(LoginRequiredMixin, View):
     template_name = 'expenses/report.html'
 
+    def get_last_income(self, user):
+        income = Income.objects.filter(user=user)
+        if income.exists():
+            income = income.order_by('-date').first()
+            date = timezone.now()+timedelta(days=income.current_circle)
+            date_format = datetime.strftime(date, '%B %d, %Y')
+            return '{}|{}|{}'.format(date_format, income.description, income.amount)
+        return 'NO INCOME YET :('
+
+    def get_next_income(self, user):
+        income = Income.objects.filter(user=user, repition=True).order_by('current_circle').first()
+        date = timezone.now()+timedelta(days=income.current_circle)
+        date_format = datetime.strftime(date, '%B %d, %Y')
+        return '{}|{}|{}'.format(date_format, income.description, income.amount)
+
     def get(self, request):
         user = request.user
         balance = CustomUser.objects.get(user=user).current_balance
-        last_income = 'TODO'
-        next_income = 'TODO'
+        last_income = self.get_last_income(user)
+        next_income = self.get_next_income(user)
         last_entry = Entry.objects.filter(user=user).order_by('-id').last()
+        date_format =datetime.strftime(last_entry.date, '%B %d, %Y')
+        last_entry = '{}|{}|{}'.format(date_format, last_entry.description, last_entry.price)
         data={
             'last_entry':last_entry,
             'balance':balance,
-            'last_income': 'TODO',
-            'next_income': 'TODO',
+            'last_income': last_income,
+            'next_income': next_income,
             'last_expense': last_entry,
             'next_expense': 'TODO'
         }
@@ -116,3 +136,4 @@ class AddIncome(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         form.instance.current_circle = form.instance.circle_repetition
         return super().form_valid(form)
+
