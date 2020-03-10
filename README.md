@@ -12,4 +12,5 @@ An web app that allows to control the expenses of a person
 8. [ ] To if exists a lot of entries or at the moment of query those it will be a good idead to use the overflow 
 9. [ ] Add test for the models (I have the feeling that the Income and the functionality to enter new income is not workig)
 10. [ ] The program will no display future expense, but I think It could be a good feature to add`
-11. [ ] the Model of entry and the form have a werid _init_, for an example check the fucntion form_valid from expesnses views personData to see it 
+11. [ ] the Model of entry and the form have a werid _init_, for an example check the fucntion form_valid from expesnses views personData to see it.
+12. [ ] Make the function to run schedule tasks 

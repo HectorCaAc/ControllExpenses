@@ -1,8 +1,10 @@
-from celery.task.schedules import crontab
-from celery.decorators import periodic_task
+from apscheduler.schedulers.blocking import BlockingScheduler
+
+sched = BlockingScheduler()
+
 from expenses.models import Category, Income
 
-@periodic_task(run_every=(crontab(minute='*/1')), name='pass_day', ignore_result=True)
+@sched.scheduled_job('interval', minutes=2)
 def pass_day():
     all_categories = Category.objects.all()
     for categori in all_categories:
