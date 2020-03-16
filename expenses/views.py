@@ -62,22 +62,29 @@ class Summary(LoginRequiredMixin, View):
             date = timezone.now()+timedelta(days=income.current_circle)
             date_format = datetime.strftime(date, '%B %d, %Y')
             return '{}|{}|{}'.format(date_format, income.description, income.amount)
-        return 'NO INCOME YET :('
+        return 'NO INCOME YET'
 
     def get_next_income(self, user):
-        income = Income.objects.filter(user=user, repition=True).order_by('current_circle').first()
-        date = timezone.now()+timedelta(days=income.current_circle)
-        date_format = datetime.strftime(date, '%B %d, %Y')
-        return '{}|{}|{}'.format(date_format, income.description, income.amount)
+        income = Income.objects.filter(user=user, repition=True).order_by('current_circle')
+        if income.exists():
+            income = income.first()
+            date = timezone.now()+timedelta(days=income.current_circle)
+            date_format = datetime.strftime(date, '%B %d, %Y')
+            return '{}|{}|{}'.format(date_format, income.description, income.amount)
+        else:
+            return 'No income yet'
 
     def get(self, request):
         user = request.user
         balance = CustomUser.objects.get(user=user).current_balance
         last_income = self.get_last_income(user)
         next_income = self.get_next_income(user)
-        last_entry = Entry.objects.filter(user=user).order_by('-id').last()
-        date_format =datetime.strftime(last_entry.date, '%B %d, %Y')
-        last_entry = '{}|{}|{}'.format(date_format, last_entry.description, last_entry.price)
+        last_entry = Entry.objects.filter(user=user).order_by('-id')
+        if last_entry.exists():
+            date_format =datetime.strftime(last_entry.last().date, '%B %d, %Y')
+            last_entry = '{}|{}|{}'.format(date_format, last_entry.description, last_entry.price)
+        else:
+            last_entry = 'No Entry yet'
         data={
             'last_entry':last_entry,
             'balance':balance,
