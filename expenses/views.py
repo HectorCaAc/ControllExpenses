@@ -9,7 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 
 from expenses.models import Category, Entry, Income
-from expenses.forms import EntryForm
+from expenses.forms import EntryForm, CategoryForm
 from account.models import CustomUser
 
 # Create your views here.
@@ -107,14 +107,22 @@ class CreateCategory(LoginRequiredMixin, CreateView):
         form.instance.current_circle = form.instance.circle_repetition
         return super().form_valid(form)
 
-class CategoryListView(LoginRequiredMixin, ListView):
+class CategoryListView(LoginRequiredMixin, FormView):
     model = Category
     template_name = 'expenses/category.html'
-
-    def get_queryset(self):
-        query_set = super().get_queryset()
-        query_set = query_set.filter(user=self.request.user)
-        return query_set
+    log_in='user/login'
+    success_url = 'expenses/category/add/'
+    fields = ('expense', 'circle_repetition', 'name')
+    form_class = CategoryForm
+    
+    def get(self, request):
+        user = request.user
+        categories = Category.objects.filter(user=user).order_by('-id')
+        data ={
+            'category_list': categories,
+            'form': self.form_class
+        }
+        return render(request, self.template_name, data)
 
 class AddEntry(LoginRequiredMixin, CreateView):
     form_class = EntryForm
@@ -130,6 +138,18 @@ class AddEntry(LoginRequiredMixin, CreateView):
         kwargs = super(AddEntry, self).get_form_kwargs()
         kwargs['user'] = self.request.user
         return kwargs
+
+class AddCategory(LoginRequiredMixin, View):
+    def post(self, request):
+        form = CategoryForm(request.POST)
+        print(request.POST)
+        form.instance.user = request.user
+        if form.is_valid():
+            print('The entry is a valid entry')
+            form.save()
+        else:
+            print('It was not possible to store the entry')
+        return redirect('/expenses/category/')
 
 class AddEntryAPI(LoginRequiredMixin, View):
     
@@ -149,7 +169,11 @@ class AddIncome(LoginRequiredMixin, CreateView):
     fields = ('circle_repetition', 'repition', 'description', 'amount')
     log_in='user/login'
 
-    def get(self,*args, **kwargs):
+    def post(self,*args, **kwargs):
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+        redirect('/expenses/category/')
         print(args)
         print(kwargs)
         return super().get(*args, **kwargs)

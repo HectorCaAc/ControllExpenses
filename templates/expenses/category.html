@@ -29,45 +29,82 @@
     </div>
   </div>
 </div>
-<div class="header">
-  <div class="summary">
 
+<div class="row">
+  <div class="col-sm-4 offset-md-2">
+    <div class="card">
+      <div class="card-header">
+        Number of Categories
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">{{category_list.count}}</h3>
+      </div>
+    </div>
   </div>
-  <div class="options">
-
+  <div class="col-sm-5 offset-sm-1">
+    <div class="card">
+      <div class="card-header">
+        Current Status
+      </div>
+      <div class="card-body">
+        Thing required to work
+        <div>
+          <h3>Add category</h3>
+        </div>
+        <form action="/expenses/category/add/" method="POST">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="id_name">Category Name</label>
+            <input class="form-control" type="text" name="name" id="id_name">
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="id_expense">Amount</label>
+                <input class="form-control" min="0" type="number" step="0.01" name="expense" id="id_expense">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label for="id_circle_repetition">Circle Repetition</label>
+              <input class="form-control" min="0" type="number" name="circle_repetition" id="id_circle_repetition">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
   </div>
-
 </div>
 
 <div class="col">
-    <div class="panel table-responsive" id="Budget">
-      <h3>Budget</h3>
-      <table class="table">
-        <tr>
-          <th>Name</th>
-          <th>Amount</th>
-          <th>Circle repetition</th>
-          <th>Next circle</th>
-          <th>Ammount Available</th>
-          <th></th>
-        </tr>
-        {% for category in category_list %}
-        {% if category.deficit %}
-        <tr style="background-color:red;" data-row-id="{{category.id}}">
-          {% else %}
-        <tr style="background-color:green;" data-row-id="{{category.id}}">
-          {% endif %}
-          <td>{{category.name}}</td>
-          <td>{{category.expense}}</td>
-          <td>{{category.circle_repetition}}</td>
-          <td>{{category.current_circle}}</td>
-          <td>{{category.spend_available}}</td>
-          <td><span id="test" class="btn btn-warning delete-target" data-name="{{category.name}}"
-              data-id="{{category.id}}">-</span>
-          </td>
-        </tr>
-        {% endfor %}
-      </table>
-    </div>
+  <div class="panel table-responsive" id="Budget">
+    <h3>Budget</h3>
+    <table class="table">
+      <tr>
+        <th>Name</th>
+        <th>Amount</th>
+        <th>Circle repetition</th>
+        <th>Next circle</th>
+        <th>Ammount Available</th>
+        <th></th>
+      </tr>
+      {% for category in category_list %}
+      {% if category.deficit %}
+      <tr style="background-color:red;" data-row-id="{{category.id}}">
+        {% else %}
+      <tr style="background-color:green;" data-row-id="{{category.id}}">
+        {% endif %}
+        <td>{{category.name}}</td>
+        <td>{{category.expense}}</td>
+        <td>{{category.circle_repetition}}</td>
+        <td>{{category.current_circle}}</td>
+        <td>{{category.spend_available}}</td>
+        <td><span id="test" class="btn btn-warning delete-target" data-name="{{category.name}}"
+            data-id="{{category.id}}">-</span>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
   </div>
+</div>
 {% endblock %}

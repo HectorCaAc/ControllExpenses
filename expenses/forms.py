@@ -12,3 +12,10 @@ class EntryForm (forms.ModelForm):
         self.user = kwargs.pop('user')
         super(EntryForm, self).__init__(*args, **kwargs)
         self.fields['category'].queryset = Category.objects.filter(user=self.user)
+
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model  = Category
+        fields = ['expense', 'circle_repetition', 'name']
+
+         
