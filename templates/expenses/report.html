@@ -3,29 +3,53 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'css\report.css' %}">
 <link rel="stylesheet" href="{% static 'css\homePage.css' %}">
-<div class="container content">
-    <div class="element">
-        <h2>Income</h2>
-        <h4>Last income</h4>
-        <h4>{{last_income}}</h4>
-        <h4>Upcoming Income</h4>
-        <h4>{{next_income}}</h4>
+<!-- <div class="container content"> -->
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h2>Income</h2>
+            </div>
+            <div class="card-body">
+                <h4>Last income</h4>
+                <h4>{{last_income}}</h4>
+                <h4>Upcoming Income</h4>
+                <h4>{{next_income}}</h4>
+            </div>
+
+        </div>
     </div>
-    <div class="element">
-        <h2>Current Budget</h2>
-        {% if balance > 0 %}
-            <h4 class="green">$ {{balance}}</h4>
-        {% elif balance == 0  %}
-            <h4>$ {{balance}}</h4>
-        {% else %}
-            <h4 class="red">$ {{balance}}</h4>
-        {% endif %}
+    <!-- <div class="element"> -->
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h2>Current Budgets</h2>
+            </div>
+            <div class="card-body">
+                {% if balance > 0 %}
+                <h4 class="green">$ {{balance}}</h4>
+                {% elif balance == 0  %}
+                <h4>$ {{balance}}</h4>
+                {% else %}
+                <h4 class="red">$ {{balance}}</h4>
+                {% endif %}
+            </div>
+
+        </div>
     </div>
-    <div class="element">
-        <h2>Expenses</h2>
-        <h4>Last expense</h4>
-        <div>
-            {{last_entry}}
+    <!-- <div class="element"> -->
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h2>Expenses</h2>
+            </div>
+            <div class="card-body">
+                <h4>Last expense</h4>
+                <div>
+                    {{last_entry}}
+                </div>
+            </div>
+
         </div>
     </div>
 
