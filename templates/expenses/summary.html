@@ -6,22 +6,36 @@
 <!-- <div class="card element"> -->
 <div class="row">
   <div class="col-md-3 offset-md-1">
-    <div class="card">
-      <div class="card-header">
-        <h2>Currents Budget</h2>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h2>Currents Budget</h2>
+          </div>
+          <div class="card-body">
+            {% if balance > 0 %}
+            <h4 class="green">$ {{balance}}</h4>
+            {% elif balance == 0  %}
+            <h4>$ {{balance}}</h4>
+            {% else %}
+            <h4 class="red">$ {{balance}}</h4>
+            {% endif %}
+          </div>
+        </div>
       </div>
-      <div class="card-body">
-        {% if balance > 0 %}
-        <h4 class="green">$ {{balance}}</h4>
-        {% elif balance == 0  %}
-        <h4>$ {{balance}}</h4>
-        {% else %}
-        <h4 class="red">$ {{balance}}</h4>
-        {% endif %}
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h2>Income</h2>
+          </div>
+          <div class="card-body">{{income}}</div>
+        </div>
       </div>
     </div>
   </div>
-  <div class="col-md-4 offset-md-1">
+  <div class="col-md-3 offset-md-1">
     <div class="card">
       <div class="card-header">
         <h2>Add Entry</h2>
@@ -35,6 +49,38 @@
       </div>
     </div>
   </div>
+  <div class="col-md-3 offset-md-1">
+    <div class="card">
+      <div class="card-header">
+        <h2>Add Income</h2>
+      </div>
+      <div class="card-body">
+        <form action="{% url 'expenses:add_income'%}" method="POST">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="id_description">Income Name</label>
+            <input class="form-control" type="text" name="description" id="id_description">
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="id_amount">Amount</label>
+                <input class="form-control" min="0" type="number" step="0.01" name="amount" id="id_amount">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label for="id_repition">Repetition</label>
+              <input class="form-control" min="0" type="radio" name="repition" id="id_repition">
+              <label for="id_circle_repetition">Circle Repetition</label>
+              <input class="form-control" min="0" type="number" name="circle_repetition" id="id_circle_repetition">
+            </div>
+          </div>
+          <input class="btn btn-primary" type="submit">
+        </form>
+      </div>
+    </div>
+  </div>
+
 </div>
 <div class="container content">
 </div>

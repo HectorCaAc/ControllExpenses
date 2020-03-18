@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
-from expenses.models import Category, Entry
+from expenses.models import Category, Entry, Income
 
 class EntryForm (forms.ModelForm):
     class Meta:
@@ -18,4 +18,7 @@ class CategoryForm(forms.ModelForm):
         model  = Category
         fields = ['expense', 'circle_repetition', 'name']
 
-         
+class IncomeForm(forms.ModelForm):
+    class Meta:
+        model = Income
+        fields = ['description', 'amount', 'repition', 'circle_repetition']

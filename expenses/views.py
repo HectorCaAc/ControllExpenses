@@ -9,7 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 
 from expenses.models import Category, Entry, Income
-from expenses.forms import EntryForm, CategoryForm
+from expenses.forms import EntryForm, CategoryForm, IncomeForm
 from account.models import CustomUser
 
 # Create your views here.
@@ -37,7 +37,7 @@ class PersonData(LoginRequiredMixin, FormView):
         balance = balance.first().current_balance
         categories = Category.objects.filter(user=user)
         expenses = Entry.objects.filter(user=user)
-        income = Income.objects.filter(user=user)
+        income = Income.objects.filter(user=user).count()
         data = {
             # 'categories':categories,
             'expenses':expenses,
@@ -48,7 +48,6 @@ class PersonData(LoginRequiredMixin, FormView):
         return render(request, self.template_name, data)
 
     def form_valid(self, form):
-        print(form)
         form.instance.user = self.request.user
         return super().form_valid(form)
 
@@ -81,7 +80,8 @@ class Summary(LoginRequiredMixin, View):
         next_income = self.get_next_income(user)
         last_entry = Entry.objects.filter(user=user).order_by('-id')
         if last_entry.exists():
-            date_format =datetime.strftime(last_entry.last().date, '%B %d, %Y')
+            last_entry = last_entry.first()
+            date_format =datetime.strftime(last_entry.date, '%B %d, %Y')
             last_entry = '{}|{}|{}'.format(date_format, last_entry.description, last_entry.price)
         else:
             last_entry = 'No Entry yet'
@@ -145,7 +145,6 @@ class AddCategory(LoginRequiredMixin, View):
         print(request.POST)
         form.instance.user = request.user
         if form.is_valid():
-            print('The entry is a valid entry')
             form.save()
         else:
             print('It was not possible to store the entry')
@@ -157,7 +156,6 @@ class AddEntryAPI(LoginRequiredMixin, View):
         form = EntryForm(request.POST, user=request.user)
         form.instance.user = request.user
         if form.is_valid():
-            print('The entry is a valid entry')
             form.save()
         else:
             print('It was not possible to store the entry')
@@ -166,20 +164,17 @@ class AddEntryAPI(LoginRequiredMixin, View):
 class AddIncome(LoginRequiredMixin, CreateView):
     model = Income
     template_name ='income/add.html'
-    fields = ('circle_repetition', 'repition', 'description', 'amount')
     log_in='user/login'
 
-    def post(self,*args, **kwargs):
-        form = CategoryForm(request.POST)
+    def post(self,request):
+        form = IncomeForm(request.POST)
         if form.is_valid():
-            form.save()
-        redirect('/expenses/category/')
-        print(args)
-        print(kwargs)
-        return super().get(*args, **kwargs)
+            new_income = form.save(commit=False)
+            new_income.user = request.user
+            new_income.save()
+        return redirect('/expenses/user/')
 
     def form_valid(self, form):
-        print(form.cleaned_data)
         form.instance.user = self.request.user
         form.instance.current_circle = form.instance.circle_repetition
         return super().form_valid(form)
