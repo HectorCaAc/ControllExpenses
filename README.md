@@ -14,7 +14,7 @@ THINGS TO DO NOW :
 [ ] The delete category button is not working 
 [ ] The summary page hte income is not showing the right information
 [ ] Make the task run to know how much money avaiable there are.
-[ ] Required to add an income
+[X] Required to add an income
 [ ] When a category is created the amount Avaiable is 0
 [ ] Some entries are every month and they should be add
 [ ] Add a save category, that says that every certain month , certain amount of money was saved
