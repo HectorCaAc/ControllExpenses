@@ -35,11 +35,12 @@ class PersonData(LoginRequiredMixin, FormView):
         if not balance.exists():
             return redirect('/')
         balance = balance.first().current_balance
-        categories = Category.objects.filter(user=user)
+        categories = Category.objects.filter(user=user).order_by('expense')
         expenses = Entry.objects.filter(user=user)
         income = Income.objects.filter(user=user).count()
+        categories_order = [categories.first(), categories.last()]
         data = {
-            # 'categories':categories,
+            'categories':categories_order,
             'expenses':expenses,
             'income':income,
             'balance': balance,

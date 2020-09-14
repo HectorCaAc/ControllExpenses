@@ -5,35 +5,40 @@
   <meta charset="utf-8">
   <title>Personal Expenses</title>
   <link rel="stylesheet" type="text/css" href="{% static 'css\base.css' %}">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-    crossorigin="anonymous"></script>
   {% block header %}
   {% endblock %}
 </head>
 
-<body>
+<body style="height: 100%;">
   {% if user.is_authenticated %}
-  <div class="nav-bar">
-    <div id="logo">
-      {{user.get_username}}
+  <div class="new">
+    <div class="left">
+      <div class="left_symbol">
+        H
+      </div>
+      <div class="left_option">
+        <div class="left_option_item">
+          <a href="{% url 'expenses:report' %}">Summary</a>
+        </div>
+        <div class="left_option_item">
+          <a href="{% url 'expenses:person_expenses' %}">Entry</a>
+        </div>
+        <div class="left_option_item">
+          <a href="{% url 'expenses:category' %}">Categories</a>
+        </div>
+      </div>
+      <div class="left_logout">
+        <a href="{% url 'accounts:log_out' %}">
+          Log Out
+        </a>
+      </div>
     </div>
-    <div class="options">
-      <ul>
-        <a href="{% url 'expenses:report' %}"><li> Sumary</li></a>
-        <a href="{% url 'expenses:person_expenses' %}"><li>Entry</li></a>
-        <a href="{% url 'expenses:category' %}"><li>Categories</li></a>
-        <a href="{% url 'accounts:log_out' %}"><li>Log out</li></a>
-      </ul>
+    <div class="content" style="background-color: #f5f6fa;">
+      {% endif %}
+      {% block body %}
+      {% endblock %}
     </div>
   </div>
-  {% endif %}
-  {% block body %}
-  {% endblock %}
 </body>
-<script src="https://kit.fontawesome.com/954dce0394.js" crossorigin="anonymous"></script>
 
 </html>

@@ -1,3 +1,23 @@
+.new{
+  display: flex;
+}
+
+.left{
+  display: flex;
+  flex: 0.05;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: calc(100%-10px);
+}
+.content{
+  flex: 0.95;
+  padding: 2.5%;
+}
+.left_option_item {
+}
+
+
 body{
   /* background-color: #f2f2f2; */
 }

@@ -1,19 +1,36 @@
-.content{
+.summary{
     display: flex;
-    justify-content: space-between;
+    height: 100vh;
+    justify-content: space-around;
+    flex: 1;
 }
 
-.element{
-    height: fit-content;
-    overflow: auto;
-    border: 10px solid purple;
-    border-radius: 5px;
-    padding: 2% 5% 0% 2%;
-    margin: 0% 5% 0% 5%;
+.summary_user{
+    flex: 0.25;
+    background-color: #ffffff;
+    margin: 15px;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.summary_transactions{
+    flex: 0.66;
+    /* display: flex;
+    flex-direction: column;
+    justify-content: space-around; */
+}
+.summary_current_status{
+    padding: 2% 4% 2% 4%;
+    border-radius: 12px;
+}
+.summary_current_status_categories{
+    display: flex;
+    justify-content: space-evenly;
 }
 
-.element h4{
-    margin-top: 30px;
+.summary_item{
+    background-color: white;
 }
 
 .red{
