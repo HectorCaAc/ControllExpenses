@@ -25,8 +25,8 @@ function csrfSafeMethod(method) {
 function create_category (){
 }
 
-function create_entry(){
-  console.log("Create_entry");
+function add_entry(data){
+  send_post('/api/expenses/add/', data);
 }
 
 function create_income(){
@@ -65,14 +65,15 @@ function send_post(url, data){
       "Content-Type":"application/json"
     },
     body: JSON.stringify(data)
-  }).then((response)=>
-      response.json()
-  ).then((response)=>{
+  }).then((response)=>{
+    console.log(response);
+    return response.json()
+  }).then((response)=>{
     console.log(response);
   }).catch((response)=>{
     console.log(response);
   })
 }
 export {delete_category,
-        create_entry,
+        add_entry,
         delete_entries}

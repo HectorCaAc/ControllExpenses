@@ -1,9 +1,5 @@
-import {delete_category, create_entry, delete_entries} from './api.js'
+import {delete_category, delete_entries} from './api.js'
 
-console.log("The UI should be the last thing");
-console.log("be sure that if the categoreis is to long just show certain amount of it");
-console.log("Also javascript should be use to arrage elements");
-console.log("one fo the things is import just the api, it will be more human readable");
 
 function fade_and_remove(jquery_expresion){
   let road_select = $(jquery_expresion);
@@ -18,6 +14,20 @@ function fade_and_remove(jquery_expresion){
   and then the celery thing
 
 */
+
+$('.action').click((e)=>{
+  let modalSelect = $(e.currentTarget).attr('modal-data');
+  $(`#modal-${modalSelect}`).show();
+  $(`#modal-${modalSelect}`).animate({opacity:1}, 1250);
+});
+
+$('.close_modal').click((e)=>{
+  let modal_choose =$(e.currentTarget).attr('modal') ;
+  console.log(`try to close modal ${modal_choose}`);
+  $(`#modal-${modal_choose}`).animate({opacity:0}, 1000);
+  $(`#modal-${modal_choose}`).hide();
+});
+
 $(document).ready(()=>{
   $(".delete-target").click((event)=>{
       let id = event.target.getAttribute("data-id");
@@ -64,3 +74,4 @@ $("#delete_category").click(()=>{
 $('#cancell_category').click(()=>{
   $('#delete-entries').modal('hide');
 })
+
