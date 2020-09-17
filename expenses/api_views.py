@@ -1,6 +1,7 @@
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.parsers import JSONParser
 from rest_framework.renderers import  JSONRenderer
 
@@ -40,4 +41,24 @@ def delete_entries(request):
 
 @api_view(['POST'])
 def add_entry(request):
-    print('THE ADD ENTRY API IS NOT DONE YET, IT WILL BE DONE WHEN REACT IS ADDED TO THE PROGRAM OTHER WISE IS A WASE OF TIME')
+    """
+        Add spend to certain user
+    """
+    print('*'*10)
+    print('Request received')
+    print(request.data)
+    return Response({'message': 'OK'},status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+def add_income(request):
+    """
+        Add Income to certain user
+    """
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def add_category(request):
+    """
+        Add new category to certain user
+    """
+    pass

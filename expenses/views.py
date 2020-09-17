@@ -27,6 +27,11 @@ class PersonData(LoginRequiredMixin, FormView):
         form = self.form_class(request.POST, user=request.user)
         if self.form_valid(form):
                 form.save()
+                print('*'*10)
+                print('FORM VALID')
+        else:
+            print('*'*10)
+            print('There is an error with the entry enter')
         return self.get(request)
 
     def get(self, request):
@@ -36,16 +41,19 @@ class PersonData(LoginRequiredMixin, FormView):
             return redirect('/')
         balance = balance.first().current_balance
         categories = Category.objects.filter(user=user).order_by('expense')
-        expenses = Entry.objects.filter(user=user)
+        expenses = Entry.objects.filter(user=user).order_by('-price')
         income = Income.objects.filter(user=user).count()
         categories_order = [categories.first(), categories.last()]
         data = {
             'categories':categories_order,
-            'expenses':expenses,
+            'expenses':expenses[:10],
             'income':income,
             'balance': balance,
-            'form': self.form_class(user=user)
+            'form': self.form_class(user=user),
+            'biggest_expense': expenses.first(),
+            'smallest_expense': expenses.last(),
         }
+        print('data sent to the template {}'.format(str(data)))
         return render(request, self.template_name, data)
 
     def form_valid(self, form):
@@ -79,8 +87,8 @@ class Summary(LoginRequiredMixin, View):
         balance = CustomUser.objects.get(user=user).current_balance
         last_income = self.get_last_income(user)
         next_income = self.get_next_income(user)
-        last_entry = Entry.objects.filter(user=user).order_by('-id')
-        if last_entry.exists():
+        entries = Entry.objects.filter(user=user).order_by('-id')
+        if entries.exists():
             last_entry = last_entry.first()
             date_format =datetime.strftime(last_entry.date, '%B %d, %Y')
             last_entry = '{}|{}|{}'.format(date_format, last_entry.description, last_entry.price)
@@ -92,7 +100,8 @@ class Summary(LoginRequiredMixin, View):
             'last_income': last_income,
             'next_income': next_income,
             'last_expense': last_entry,
-            'next_expense': 'TODO'
+            'next_expense': 'TODO',
+            'income': Income.objects.filter(user=user)[:10]
         }
         return render(request, self.template_name, data)
 
