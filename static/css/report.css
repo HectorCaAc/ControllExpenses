@@ -1,0 +1,33 @@
+.report{
+    height: 100vh;
+}
+
+.report_type{
+    background-color: #ffffff;
+    border-radius: 15px;
+    margin-bottom: 25px;
+}
+
+.report_header{
+    display:flex;
+    justify-content: space-around;
+}
+
+.report_body{
+    width: 100%;
+   background-color: #f9fafc; 
+}
+
+.option{
+    flex: 0.25;
+    /* background-color: green; */
+    display: flex;
+    justify-content: space-between;
+}
+
+.option_button{
+    color: #5ac2ff;
+    background-color: #ccebfc;
+    padding: 4px;
+    border-radius: 10px;
+}

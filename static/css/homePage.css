@@ -1,3 +1,21 @@
+.modal{
+    opacity: 0;
+    z-index: -1;
+    display: none;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.modal_content{
+    margin-top: auto;
+    margin: auto;
+    padding: 25px;
+    border-radius: 15px;
+    background-color: white;
+    margin: 15px;
+    
+}
+
 .summary{
     display: flex;
     height: 100vh;
@@ -20,6 +38,12 @@
     flex-direction: column;
     justify-content: space-around; */
 }
+
+.summary_transactions_actions{
+    display: flex;
+    justify-content: space-around;
+    margin: 25px;
+}
 .summary_current_status{
     padding: 2% 4% 2% 4%;
     border-radius: 12px;
@@ -31,6 +55,20 @@
 
 .summary_item{
     background-color: white;
+}
+
+.expenses{
+    display: flex;
+}
+
+.item{
+    background-color: red;
+    margin: 10px;
+    border-radius: 15px;
+}
+
+.action{
+    cursor: default;
 }
 
 .red{

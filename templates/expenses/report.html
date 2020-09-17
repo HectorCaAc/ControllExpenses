@@ -1,57 +1,64 @@
 {% extends "base.html"%}
-{% block body %}
 {% load static %}
-<link rel="stylesheet" href="{% static 'css\report.css' %}">
-<link rel="stylesheet" href="{% static 'css\homePage.css' %}">
-<!-- <div class="container content"> -->
-<div class="row">
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-header">
+{% block header %}
+<link rel="stylesheet" href="{% static 'css/report.css' %}">
+{% endblock %}
+{% block body%}
+<div class="report">
+    <div class="report_type">
+        <div class="report_header">
+            <div class="option">
                 <h2>Income</h2>
+                <h6><span class="option_button">Add Income</span></h6>
             </div>
-            <div class="card-body">
-                <h4>Last income</h4>
-                <h4>{{last_income}}</h4>
-                <h4>Upcoming Income</h4>
-                <h4>{{next_income}}</h4>
-            </div>
-
+            <h6>Most frequent income</h6>
+            <h6>least frequent income</h6>
+            <h6>Total Income 30 days</h6>
+        </div>
+        <div>
+            <table class="report_body">
+                <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                </tr>
+                {% for entry in  income %}
+                <tr>
+                    <th>entry.date</th>
+                    <th>entry.description</th>
+                    <th>entry.price</th>
+                </tr>
+                {% endfor %}
+            </table>
         </div>
     </div>
-    <!-- <div class="element"> -->
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-header">
-                <h2>Current Budgets</h2>
+    <div class="report_type">
+        <div class="report_header">
+            <div class="option">
+                <h4>Expenses
+                <span class="option_button">Add Expense</span>
+                </h4>
             </div>
-            <div class="card-body">
-                {% if balance > 0 %}
-                <h4 class="green">$ {{balance}}</h4>
-                {% elif balance == 0  %}
-                <h4>$ {{balance}}</h4>
-                {% else %}
-                <h4 class="red">$ {{balance}}</h4>
-                {% endif %}
-            </div>
-
+            <h6>Most Frequent Expense</h6>
+            <h6>Most Expensive Expense</h6>
+            <h6>Toal Expense 30 Days</h6>
+        </div>
+        <div>
+            <table class="report_body">
+                <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                </tr>
+                {% for entry in  income %}
+                <tr>
+                    <th>entry.date</th>
+                    <th>entry.description</th>
+                    <th>entry.price</th>
+                </tr>
+                {% endfor %}
+            </table>
         </div>
     </div>
-    <!-- <div class="element"> -->
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-header">
-                <h2>Expenses</h2>
-            </div>
-            <div class="card-body">
-                <h4>Last expense</h4>
-                <div>
-                    {{last_entry}}
-                </div>
-            </div>
-
-        </div>
-    </div>
-
 </div>
 {% endblock %}
