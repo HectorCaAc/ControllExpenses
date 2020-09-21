@@ -54,6 +54,9 @@ def add_income(request):
     """
         Add Income to certain user
     """
+    print('='*10)
+    print('Income')
+    return Response({'message': 'OK'},status=status.HTTP_200_OK)
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -61,4 +64,6 @@ def add_category(request):
     """
         Add new category to certain user
     """
-    pass
+    print('*'*10)
+    print('Add Category')
+    return Response({'message': 'OK'},status=status.HTTP_200_OK)

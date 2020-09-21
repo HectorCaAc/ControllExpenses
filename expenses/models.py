@@ -60,6 +60,8 @@ class Entry(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     date = models.DateField(auto_now=True)
 
+    def __str__(self):
+        return self.description[:250]
     def get_absolute_url(self):
         return reverse(
             'expenses:person_expenses'

@@ -7,6 +7,8 @@ from django.views.generic.edit import FormView, CreateView
 from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.utils import timezone
+from django.db.models import Sum, Count
 
 from expenses.models import Category, Entry, Income
 from expenses.forms import EntryForm, CategoryForm, IncomeForm
@@ -82,18 +84,40 @@ class Summary(LoginRequiredMixin, View):
         else:
             return 'No income yet'
 
+    def previous_expenses(self, querySet, days=None):
+        if days is None:
+            days = 30
+        now = timezone.now()-timedelta(days=days)
+        previous_expenses = querySet.filter(date__gte=now).aggregate(Sum('price'))
+        return previous_expenses['price__sum']
+        
+
     def get(self, request):
         user = request.user
         balance = CustomUser.objects.get(user=user).current_balance
         last_income = self.get_last_income(user)
         next_income = self.get_next_income(user)
-        entries = Entry.objects.filter(user=user).order_by('-id')
-        if entries.exists():
-            last_entry = last_entry.first()
+        query = Entry.objects.filter(user=user)
+        if query.exists():
+            entries = query.order_by('-id')
+            last_entry = entries.first()
             date_format =datetime.strftime(last_entry.date, '%B %d, %Y')
             last_entry = '{}|{}|{}'.format(date_format, last_entry.description, last_entry.price)
+            total_sum_entries = self.previous_expenses(query)
+            order_expensives = query.order_by('price')
+            smallest_entry= order_expensives.first()
+            biggest_entry = order_expensives.last()
+            most_frequent = query.values('description').annotate(count=Count('description')).order_by('-count').first()
+            print('*'*10+"most_frequent"+"*"*10)
+            print(most_frequent)
         else:
             last_entry = 'No Entry yet'
+            total_sum_entries = 0
+            biggest_entry = 0
+            smallest_entry = 0
+            most_frequent = {'description': 'No entries yet',
+                            'count': 0
+                            }
         data={
             'last_entry':last_entry,
             'balance':balance,
@@ -101,7 +125,12 @@ class Summary(LoginRequiredMixin, View):
             'next_income': next_income,
             'last_expense': last_entry,
             'next_expense': 'TODO',
-            'income': Income.objects.filter(user=user)[:10]
+            'income': Income.objects.filter(user=user)[:10],
+            'expense': entries,
+            'total_sum_entries': total_sum_entries,
+            'biggest_entry': biggest_entry,
+            'smallest_entry': smallest_entry,
+            'most_frequent': most_frequent
         }
         return render(request, self.template_name, data)
 
