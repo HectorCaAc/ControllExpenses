@@ -46,7 +46,7 @@
         <div modal="entry" class="close_modal">
           X
         </div>
-        <form id="form-entry" action="post">
+        <form id="form-entry" method="POST">
           {% csrf_token %}
           {{form.as_table}}
           <input type="submit" value="Submit">
@@ -109,11 +109,20 @@
     <h4>Last entries</h4>
     <div class="summary_transactions_last_entries summary_item">
       <div class="summary_transactions_expenses">
-        {% for expense in expenses %}
-        <div class="expense item">
-          {{expense}}
-        </div>
-        {% endfor %}
+        <table>
+          <tr>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Date</th>
+          </tr>
+          {% for expense in expenses %}
+          <tr>
+            <td>{{expense.description}}</td>
+            <td>${{expense.price}}</td>
+            <td>{{expense.date}}</td>
+          </tr>
+          {% endfor %}
+        </table>
       </div>
     </div>
   </div>

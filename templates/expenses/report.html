@@ -24,9 +24,9 @@
                 </tr>
                 {% for entry in  income %}
                 <tr>
-                    <th>entry.date</th>
-                    <th>entry.description</th>
-                    <th>entry.price</th>
+                    <th>{{entry.date}}</th>
+                    <th>{{entry.description}}</th>
+                    <th>{{entry.price}}</th>
                 </tr>
                 {% endfor %}
             </table>
@@ -39,9 +39,25 @@
                 <span class="option_button">Add Expense</span>
                 </h4>
             </div>
-            <h6>Most Frequent Expense</h6>
-            <h6>Most Expensive Expense</h6>
-            <h6>Toal Expense 30 Days</h6>
+            <div>
+                <h6>Most Frequent Expense</h6>
+                {{most_frequent.description}}
+                {{most_frequent.count}}
+            </div>
+            <div>
+                <h6>Most Expensive Expense</h6>
+                {{biggest_entry.description}}
+                ${{biggest_entry.price}}
+            </div>
+            <div>
+                <h6>Smallest Expense</h6>
+                {{smallest_entry.description}}
+                ${{smallest_entry.price}}
+            </div>
+            <div>
+                <h6>Toal Expense 30 Days</h6>
+                ${{ total_sum_entries}}
+            </div>
         </div>
         <div>
             <table class="report_body">
@@ -49,12 +65,14 @@
                     <th>Date</th>
                     <th>Description</th>
                     <th>Amount</th>
+                    <th>Category</th>
                 </tr>
-                {% for entry in  income %}
+                {% for entry in  expense %}
                 <tr>
-                    <th>entry.date</th>
-                    <th>entry.description</th>
-                    <th>entry.price</th>
+                    <td>{{entry.date}}</td>
+                    <td>{{entry.description}}</td>
+                    <td>{{entry.price}}</td>
+                    <td>{{entry.category}}</td>
                 </tr>
                 {% endfor %}
             </table>
