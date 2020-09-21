@@ -16,6 +16,11 @@
 .report_body{
     width: 100%;
    background-color: #f9fafc; 
+   border-collapse: collapse;
+}
+
+.report_body td{
+    border-top: 1px solid #7070b3;
 }
 
 .option{
