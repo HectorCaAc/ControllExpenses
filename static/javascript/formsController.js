@@ -1,4 +1,4 @@
-import {add_entry} from './api.js';
+import {add_entry, add_income} from './api.js';
 
 function serialized_to_json(serialized_data){
     let split = serialized_data.split('&');
@@ -15,8 +15,8 @@ $('#form-income').submit((e)=>{
     e.preventDefault();
     let currentForm= $(e.currentTarget).serialize();
     let data = serialized_to_json(currentForm);
-    console.log(data);
-    add_entry(data);
+    console.log("income add");
+    add_income(data);
 })
 function entry_form(data){
 

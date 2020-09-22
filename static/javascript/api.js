@@ -29,8 +29,8 @@ function add_entry(data){
   send_post('/api/expenses/add/', data);
 }
 
-function create_income(){
-
+function add_income(data){
+  send_post('/api/income/add/', data)
 }
 
 function delete_category(category_id){
@@ -76,4 +76,5 @@ function send_post(url, data){
 }
 export {delete_category,
         add_entry,
-        delete_entries}
+        delete_entries,
+        add_income}
