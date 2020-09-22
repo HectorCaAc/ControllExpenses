@@ -11,9 +11,15 @@
                 <h2>Income</h2>
                 <h6><span class="option_button">Add Income</span></h6>
             </div>
-            <h6>Most frequent income</h6>
-            <h6>least frequent income</h6>
-            <h6>Total Income 30 days</h6>
+            <div>
+                <h6>Most frequent income</h6>
+            </div>
+            <div>
+                <h6>least frequent income</h6>
+            </div>
+            <div>
+                <h6>Total Income 30 days</h6>
+            </div>
         </div>
         <div>
             <table class="report_body">
@@ -24,9 +30,9 @@
                 </tr>
                 {% for entry in  income %}
                 <tr>
-                    <th>{{entry.date}}</th>
-                    <th>{{entry.description}}</th>
-                    <th>{{entry.price}}</th>
+                    <td>{{entry.date}}</td>
+                    <td>{{entry.description}}</td>
+                    <td>{{entry.amount}}</td>
                 </tr>
                 {% endfor %}
             </table>
