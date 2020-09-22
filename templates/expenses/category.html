@@ -4,107 +4,61 @@
 <link rel="stylesheet" href="{% static 'css\category.css'%}">
 {% endblock %}
 {% block body %}
-<div class="modal fade" id="delete-entries" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4>Delete Category </h4>
+<div class="category">
+  <div class="category_card">
+    <div class="category_header">
+      <div class="category_header_title">
+        <h4>Category</h4>
       </div>
-      <div class="modal-body">
-        <h3 id="modal-category">Delete all the entries for the category "</h3>
-        <input id="delete_entries" type="checkbox" value="YES">
-        <label for="YES"> Yes</label>
-        <div class="note" style="margin:10px;">
-          * It will remove all the entries belonging to this category
-          and it will restore that money to the current balance.
-        </div>
-
-        <h5>Do you wanted to continue with the deletion of this category</h5>
-        <div class="">
-          <input class="btn btn-danger" id="delete_category" type="button" value="Delete Category">
-          <input class="btn btn-warning" type="button" value="Cancell Operation" data-dismiss="modal">
-        </div>
+      <div class="category_header_number">
+        <h4>{{ category_list_size}}</h4>
       </div>
     </div>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-sm-4 offset-md-2">
-    <div class="card">
-      <div class="card-header">
-        Number of Categories
+    <div class="category_card_                                                                                  body">
+      {% for category in category_list%}
+      <div class="category_item">
+        <div class="category_item_bar">
+          <h5>{{category.name}}</h5>
+          {% if category.current_circle > 0 %}
+          <div>
+            <h6>Next circle</h6>{{category.current_circle}}
+          </div>
+          {% endif %}
+        </div>
+        <div class="category_item_body">
+          <div>
+            <h6>Category Expense</h6>{{category.expense}}
+          </div>
+          <div>
+            <h6>Current use</h6>{{category.spend_available}}
+          </div>
+        </div>
       </div>
-      <div class="card-body">
-        <h3 class="card-title">{{category_list.count}}</h3>
-      </div>
+      {% endfor %}
     </div>
   </div>
-  <div class="col-sm-5 offset-sm-1">
-    <div class="card">
-      <div class="card-header">
-        Current Status
+  <div class="category_body">
+    <div class="category_actions">
+      <div class="action">
+        Add Category
       </div>
-      <div class="card-body">
-        Thing required to work
-        <div>
-          <h3>Add category</h3>
+    </div>
+    <div class="modal" class="modal-category">
+      <div class="modal_content">
+        <div modal="category" class="close_modal">
+          X
         </div>
-        <form action="/expenses/category/add/" method="POST">
+        <form action="{% url 'expenses:add_category' %}" id="form-category" method="POST">
           {% csrf_token %}
-          <div class="form-group">
-            <label for="id_name">Category Name</label>
-            <input class="form-control" type="text" name="name" id="id_name">
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="id_expense">Amount</label>
-                <input class="form-control" min="0" type="number" step="0.01" name="expense" id="id_expense">
-              </div>
-            </div>
-            <div class="col-md-6">
-              <label for="id_circle_repetition">Circle Repetition</label>
-              <input class="form-control" min="0" type="number" name="circle_repetition" id="id_circle_repetition">
-            </div>
-          </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
+          {{form.as_table}}
+          <input type="submit" values="Submit">
         </form>
       </div>
     </div>
+    <div class="category_selected">
+      
+    </div>
   </div>
-</div>
 
-<div class="col">
-  <div class="panel table-responsive" id="Budget">
-    <h3>Budget</h3>
-    <table class="table">
-      <tr>
-        <th>Name</th>
-        <th>Amount</th>
-        <th>Circle repetition</th>
-        <th>Next circle</th>
-        <th>Ammount Available</th>
-        <th></th>
-      </tr>
-      {% for category in category_list %}
-      {% if category.deficit %}
-      <tr style="background-color:red;" data-row-id="{{category.id}}">
-        {% else %}
-      <tr style="background-color:green;" data-row-id="{{category.id}}">
-        {% endif %}
-        <td>{{category.name}}</td>
-        <td>{{category.expense}}</td>
-        <td>{{category.circle_repetition}}</td>
-        <td>{{category.current_circle}}</td>
-        <td>{{category.spend_available}}</td>
-        <td><span id="test" class="btn btn-warning delete-target" data-name="{{category.name}}"
-            data-id="{{category.id}}">-</span>
-        </td>
-      </tr>
-      {% endfor %}
-    </table>
-  </div>
 </div>
 {% endblock %}

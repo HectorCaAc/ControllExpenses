@@ -156,7 +156,9 @@ class CategoryListView(LoginRequiredMixin, FormView):
         categories = Category.objects.filter(user=user).order_by('-id')
         data ={
             'category_list': categories,
-            'form': self.form_class
+            'form': self.form_class,
+            'category_list_size': categories.count(),
+            'category_selected': categories.first()
         }
         return render(request, self.template_name, data)
 
