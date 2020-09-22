@@ -8,15 +8,21 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  height: calc(100%-10px);
+  height:80vh;
+  position: sticky;
 }
 .content{
   flex: 0.95;
   padding: 2.5%;
 }
-.left_option_item {
+a {
+  color: #474a4e;
+  text-decoration: none;
 }
 
+a:hover{
+  color: #0366d6;
+}
 
 body{
   /* background-color: #f2f2f2; */

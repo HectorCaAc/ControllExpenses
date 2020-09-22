@@ -1,0 +1,48 @@
+.category{
+    display: flex;
+}
+
+.category_card{
+    flex: 0.25;
+    background-color: #ffffff;
+    margin: 15px;
+    border-radius: 25px;
+    /* height: 80vh; */
+    height: fit-content;
+    max-height: 80vh;
+    overflow-y: scroll;
+}
+
+.category_item{
+    border-bottom: 1px solid #e1e4e8;
+    border-top: 1px solid #e1e4e8;
+    display: flex;
+    justify-content: space-around;
+}
+
+.category_item_bar h5{
+    color: #0366d6;
+}
+
+.category_header{
+    display: flex;
+    justify-content: space-around;
+}
+
+.category_body{
+    flex: 0.66;
+    justify-content: space-between;
+}
+
+.category_selected{
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 2%;
+    height: 75%;
+}
+
+.category_selected_header{
+    display: flex;
+    justify-content: space-between;
+}
+

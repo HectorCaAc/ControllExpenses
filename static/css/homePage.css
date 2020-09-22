@@ -18,7 +18,7 @@
 
 .summary{
     display: flex;
-    height: 100vh;
+    height: 80vh;
     justify-content: space-around;
     flex: 1;
 }
