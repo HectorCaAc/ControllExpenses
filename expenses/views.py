@@ -90,8 +90,7 @@ class Summary(LoginRequiredMixin, View):
         now = timezone.now()-timedelta(days=days)
         previous_expenses = querySet.filter(date__gte=now).aggregate(Sum('price'))
         return previous_expenses['price__sum']
-        
-
+    
     def get(self, request):
         user = request.user
         balance = CustomUser.objects.get(user=user).current_balance
@@ -108,8 +107,6 @@ class Summary(LoginRequiredMixin, View):
             smallest_entry= order_expensives.first()
             biggest_entry = order_expensives.last()
             most_frequent = query.values('description').annotate(count=Count('description')).order_by('-count').first()
-            print('*'*10+"most_frequent"+"*"*10)
-            print(most_frequent)
         else:
             last_entry = 'No Entry yet'
             total_sum_entries = 0
