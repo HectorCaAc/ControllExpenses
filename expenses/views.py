@@ -91,6 +91,25 @@ class Summary(LoginRequiredMixin, View):
         previous_expenses = querySet.filter(date__gte=now).aggregate(Sum('price'))
         return previous_expenses['price__sum']
     
+    def get_income_requirements(self, user, days=None):
+        if days is None:
+            days = 30
+        query = Income.objects.filter(user=user)
+        data = {}
+        if query.exists():
+            print('*'*10+'Income data'+'*'*10)
+            start = timezone.now() - timedelta(days=days)
+            data['total_income'] = query.aggregate(Sum('amount'))['amount__sum']
+            frequent_income = query.filter(repition=True, circle_repetition__gt=0).order_by('circle_repetition')
+            data['most_frequent'] = frequent_income.first()
+            data['least_frequent'] = frequent_income.last()
+        else:
+            data['most_frequent'] = 'No income'
+            data['least_frequent'] = 'No income'
+            data['total_income'] = 'No income'
+        print(data)
+        return data
+
     def get(self, request):
         user = request.user
         balance = CustomUser.objects.get(user=user).current_balance
@@ -107,6 +126,7 @@ class Summary(LoginRequiredMixin, View):
             smallest_entry= order_expensives.first()
             biggest_entry = order_expensives.last()
             most_frequent = query.values('description').annotate(count=Count('description')).order_by('-count').first()
+            income_data = self.get_income_requirements(user)
         else:
             last_entry = 'No Entry yet'
             total_sum_entries = 0
@@ -115,6 +135,10 @@ class Summary(LoginRequiredMixin, View):
             most_frequent = {'description': 'No entries yet',
                             'count': 0
                             }
+            income_data = {}
+            income_data['most_frequent'] = 'No income'
+            income_data['least_frequent'] = 'No income'
+            income_data['total_income'] = 'No income'
         data={
             'last_entry':last_entry,
             'balance':balance,
@@ -127,7 +151,10 @@ class Summary(LoginRequiredMixin, View):
             'total_sum_entries': total_sum_entries,
             'biggest_entry': biggest_entry,
             'smallest_entry': smallest_entry,
-            'most_frequent': most_frequent
+            'most_frequent': most_frequent,
+            'most_frequent_income':income_data['most_frequent'],
+            'least_frequent_income': income_data['least_frequent'],
+            'total_income': income_data['total_income']
         }
         return render(request, self.template_name, data)
 

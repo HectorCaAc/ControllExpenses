@@ -13,12 +13,25 @@
             </div>
             <div>
                 <h6>Most frequent income</h6>
+                {{most_frequent_income.description}}| $ {{most_frequent_income.amount}}
             </div>
             <div>
                 <h6>least frequent income</h6>
+                {{least_frequent_income.description}}| $ {{least_frequent_income.amount}}
             </div>
             <div>
                 <h6>Total Income 30 days</h6>
+                $ {{total_income}}
+            </div>
+        </div>
+        <div class="modal" id="modal-income">
+            <div class="modal_content">
+                <div class="close_modal" modal="income">
+                    X
+                </div>
+                <form action="">
+
+                </form>
             </div>
         </div>
         <div>
@@ -63,6 +76,16 @@
             <div>
                 <h6>Toal Expense 30 Days</h6>
                 ${{ total_sum_entries}}
+            </div>
+        </div>
+        <div class="modal" id="modal-entry">
+            <div class="modal_content">
+                <div class="close_modal" modal="entry">
+                    X
+                </div>
+                <form action="">
+
+                </form>
             </div>
         </div>
         <div>

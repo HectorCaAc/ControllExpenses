@@ -28,9 +28,27 @@
     background-color: #ffffff;
     margin: 15px;
     border-radius: 25px;
-    display: flex;
-    flex-direction: column;
     align-items: center;
+}
+.summary_user_header{
+    height: 25%;
+    text-align: center;
+    margin-top: 5%;
+}
+.summary_user_budget{
+    height: 33%;
+    display: flex;
+    justify-content: space-around;
+}
+.summary_user_footer_item{
+    height: 50%;
+    text-align: center;
+    padding: 3%;
+    margin: 3%;
+}
+.summary_user_footer_item:hover{
+    background-color: #01a3ff;
+    color: white;
 }
 .summary_transactions{
     flex: 0.66;

@@ -11,6 +11,10 @@
 .report_header{
     display:flex;
     justify-content: space-around;
+    margin-bottom: 4%;
+}
+.modal{
+    display: none;
 }
 
 .report_body{

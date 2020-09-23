@@ -13,19 +13,35 @@
         picture
         <div class="name">
           {{user.get_username}}
+          {% if balance > 0 %}
+          <h4 class="green">${{balance}}</h4>
+          {% elif balance == 0  %}
+          <h4>$ {{balance}}</h4>
+          {% else %}
+          <h4 class="red">$ {{balance}}</h4>
+          {% endif %}
         </div>
       </div>
-      {% if balance > 0 %}
-      <h4 class="green">${{balance}}</h4>
-      {% elif balance == 0  %}
-      <h4>$ {{balance}}</h4>
-      {% else %}
-      <h4 class="red">$ {{balance}}</h4>
-      {% endif %}
-      <div class="summary_user_middle">
+      <div class="summary_user_footer">
+      </div>
+    </div>
+    <div class="summary_user_budget">
+      <div class="summary_income">
+        <h6>Income</h6>
+      </div>
+      <div class="summary_spending">
+        <h6>Spending</h6>
+      </div>
+    </div>
+    <div class="summary_user_footer">
+      <div class="summary_user_footer_item">
         income : {{income}}
       </div>
-      <div class="summary_user_footer">
+      <div class="summary_user_footer_item">
+        Categories: 
+      </div>
+      <div class="summary_user_footer_item">
+        Next Income:
       </div>
     </div>
   </div>
