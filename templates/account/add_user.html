@@ -1,9 +1,21 @@
 {% extends "account/account_base.html"%}
+{% load static %}
+{% block header %}
+<link rel="stylesheet" type="text/css" href="{% static 'css\login.css' %}">
+{% endblock%}
 {% block  body %}
-    <h3>Form to add user</h3>
+<div class="login">
+  <div class="login_left">
+    <h3>Create User</h3>
+    <div class="login_options">
+      <span type="submit"><a href="{% url 'accounts:sign_up' %}">singup</a></span>
+      <span type="submit"><a href="{% url 'accounts:log_in' %}">Log in</a> </span>
+    </div>
     <form  method="POST">
       {% csrf_token %}
       {{ form.as_p }}
       <button class="btn btn-secondary" type='submit'>Submit !</button>
     </form>
+  </div>
+</div>
 {% endblock %}

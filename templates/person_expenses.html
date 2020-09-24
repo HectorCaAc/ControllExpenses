@@ -1,26 +1,21 @@
 {% extends "base.html" %}
+{% load static %}
+{% block header %}
+<link rel="stylesheet" type="text/css" href="{% static 'css\login.css' %}">
+{% endblock %}
 {% block body %}
-    <h3>This is a really simple web application at the moment</h3>
-    <p>But with hard work and time it can get me a nice job </p>
-    <p>if I applie myself and also if I make it look nice</p>
-
-    <h3>Things to do </h3>
-    <div class="row">
-      <div class="col">
-        <ul>
-          <li>Improve the security between api and the model (it is not following the standars)</li>
-          <li>Make sure that the category and the user are related, login requests ?</li>
-          <li>Finsih the tutorial of django rest</li>
-          <li>Add Button to delete income, category and entry. pop up that will ask the user what to do with the
-              categories. {If the screen is really small use the form, otherwrise use javascript}
-          </li>
-          <li>Because this project will use as a good example of my skills include testing</li>
-          <li>Be able to organize by categories and expenses</li>
-          <li>show the current 10 but be able to display more</li>
-          <li>make sure that values inside of price can only be positive(back end or front end)(not that important)</li>
-        </ul>
-      </div>
+<div class="login">
+  <div class="login_left">
+    <div class="options">
+      <h3>Log Out succesfull</h3>
+      <h3>We hope to see you soon !</h3>
     </div>
-    <span type="submit"><a href="{% url 'accounts:sign_up' %}">singup</a></span>
-    <span type="submit"><a href="{% url 'accounts:log_in' %}">Log in</a> </span>
+    <div class="container">
+      <span type="submit"><a href="{% url 'accounts:sign_up' %}">singup</a></span>
+      <span type="submit"><a href="{% url 'accounts:log_in' %}">Log in</a> </span>
+    </div>
+  </div>
+  <div class="login_right">
+  </div>
+</div>
 {% endblock %}

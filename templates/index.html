@@ -4,18 +4,29 @@
 <head>
   <meta charset="utf-8">
   <title>Personal Expenses</title>
-  <link rel="stylesheet" type="text/css" href="{% static 'css\base.css' %}">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="{% static 'css\login.css' %}">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
     integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
     crossorigin="anonymous"></script>
 </head>
 <body>
-    <h3>It will required to add some testing here </h3>
-    <span type="submit"><a href="{% url 'accounts:sign_up' %}">singup</a></span>
-    <span type="submit"><a href="{% url 'accounts:log_in' %}">Log in</a> </span>
+    <div class="container">
+      <div class="left">
+      </div>
+      <div class="right">
+        <h2>Expenses Control</h2>
+        <h3>Please either sign_up or log in to be able to use this app</h3>
+        <div class="button">
+          <div type="submit">
+            <a href="{% url 'accounts:sign_up' %}">singup</a>
+          </div>
+          <div type="submit">
+            <a href="{% url 'accounts:log_in' %}">Log in</a>
+          </div>
+        </div>
+      </div>
+    </div>
 </body>
 <script src="https://kit.fontawesome.com/954dce0394.js" crossorigin="anonymous"></script>
 

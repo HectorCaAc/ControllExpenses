@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path, include
 from expenses.views import TodoList
+from account.views import LogIn
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,5 +24,5 @@ urlpatterns = [
     re_path(r'^expenses/',include('expenses.urls')),
     re_path(r'^report',include('reports.urls')),
     re_path(r'^api/',include('expenses.api_url')),
-    re_path('',TodoList)
+    re_path('',LogIn)
 ]

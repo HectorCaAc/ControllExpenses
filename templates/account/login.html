@@ -1,9 +1,30 @@
 {% extends "account/account_base.html"%}
-{% block  body %}
-<h3>Log in user</h3>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button class="btn btn-secondary" type='submit'>Submit !</button>
-  </form>
+{% load static %}
+{% block header %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css\login.css' %}">
+{% endblock %}
+{% block body %}
+<div class="login">
+  <div class="login_left">
+    <h3>Welcome !</h3>
+    <div class="login_options">
+      <span type="submit"><a href="{% url 'accounts:sign_up' %}">singup</a></span>
+      <span type="submit"><a href="{% url 'accounts:log_in' %}">Log in</a> </span>
+    </div>
+    <form method="post" class="login_form">
+      {% csrf_token %}
+      <div class="input">
+        <label for="id_username">Please enter Username</label>
+        <input type="text" id="id_username" name="username" maxlength="255" placeholder="Username">
+      </div>
+      <div class="input">
+        <label for="id_password">Password :</label> 
+        <input type="password" name="password" maxlength="255" required="" id="id_password">
+      </div>
+      <button class="login_form_button" type='submit'>Submit !</button>
+    </form>
+  </div>
+  <div class="background">
+  </div>
+</div>
 {% endblock %}
