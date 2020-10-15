@@ -6,6 +6,9 @@ from rest_framework.parsers import JSONParser
 from rest_framework.renderers import  JSONRenderer
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 
+from django.contrib.auth import get_user_model
+User = get_user_model()
+
 from django.db.models import Sum
 
 from account.models import CustomUser
@@ -88,3 +91,39 @@ def add_category(request):
     print('*'*10)
     print('Add Category')
     return Response({'message': 'OK'},status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+# @authentication_classes([SessionAuthentication, BasicAuthentication])
+# @permission_classes([IsAuthenticated])
+def categories(request, username):
+    """
+        Get all the categories related to certain user
+    """
+    user = User.objects.filter(username=username)
+    if not user.exists():
+        return Response({'message': 'User not found'}, status=status.HTTP_400_BAD_REQUEST)
+    categories = {} 
+    for categori in Category.objects.filter(user=user.first()):
+        categories[categori.name] = {
+            'expense': categori.expense,
+            'spend_available': categori.spend_available
+        }
+    print('*'*10+'GET CATEGORY'+'*'*10)
+    print('category_request {}'.format(username))
+    print(request)
+    data = {
+        'message': 'request approved',
+        'categories': categories
+    }
+    print(data)
+    return Response(data, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def category_description(request, username, category_name):
+    user = User.objects.filter(username=username)
+    if not user.exists():
+        return Response({'message': 'User not found'}, status=status.HTTP_400_BAD_REQUEST)
+    category = Category.objects.filter(user=user.first(), name=category_name)
+    if not category.exists():
+        return Response({'message': 'Category not found'}, status=status.HTTP_400_BAD_REQUEST)
+    return Response({'message': 'category found'})

@@ -1,2 +1,6 @@
 db.sqlite3
 *.pyc
+
+# Required to add ignore files for the node and front end stuff
+
+/frontend/node_modules/

@@ -182,6 +182,7 @@ class CategoryListView(LoginRequiredMixin, FormView):
         user = request.user
         categories = Category.objects.filter(user=user).order_by('-id')
         data ={
+            'first': categories,
             'category_list': categories,
             'form': self.form_class,
             'category_list_size': categories.count(),
