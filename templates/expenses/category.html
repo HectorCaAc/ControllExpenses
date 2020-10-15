@@ -5,7 +5,7 @@
 {% endblock %}
 {% block body %}
 <div class="category">
-  <div class="category_card">
+  <!-- <div class="category_card">
     <div class="category_header">
       <div class="category_header_title">
         <h4>Category</h4>
@@ -14,9 +14,9 @@
         <h4>{{ category_list_size}}</h4>
       </div>
     </div>
-    <div class="category_card_                                                                                  body">
+    <div class="category_card_body">
       {% for category in category_list%}
-      <div class="category_item">
+      <div class="category_item" category={{category}}>
         <div class="category_item_bar">
           <h5>{{category.name}}</h5>
           {% if category.current_circle > 0 %}
@@ -55,10 +55,13 @@
         </form>
       </div>
     </div>
-    <div class="category_selected">
-      
+    <div id="category_selected" category={{ first }} >
     </div>
+  </div> -->
+  <div id="category_pannel">
+    <h4>hello world</h4>
   </div>
-
+<script src="{% static 'main.js'%}" type="module"></script>
+<script src="{% static 'javascript/categorySelected.js' %}"></script>
 </div>
 {% endblock %}
