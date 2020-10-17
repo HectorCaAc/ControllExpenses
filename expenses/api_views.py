@@ -130,4 +130,10 @@ def category_description(request, username, category_name):
     category = Category.objects.filter(user=user.first(), name=category_name)
     if not category.exists():
         return Response({'message': 'Category not found'}, status=status.HTTP_400_BAD_REQUEST)
-    return Response({'message': 'category found'})
+    category = category.first()
+    attributes = {'expense', 'circle_repetition', 'name', 'current_circle', 'deficit', 'spend_available'}
+    data = {}
+    for attribute in attributes:
+        data[attribute] = getattr(category, attribute, None)
+
+    return Response({'message': 'category found', 'data': data})

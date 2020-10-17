@@ -26,7 +26,7 @@
 
 .category_body_header{
     margin-top  : 10px;
-    padding: 10px;
+    padding: 10px 10px 0px 10px;
     border-bottom: 1px solid #9db2d7;
 }
 
@@ -47,7 +47,30 @@
     border-bottom : 1px solid #1d3e52;
 }
 
+.category_display{
+    height: 70vw;
+}
+
 .category_name{
     margin-top: 10%;
     color:#5ac2ff;
+}
+
+.category_display_data{
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.category_display_data div{
+    padding: 5%;
+    margin: 1%;
+    background-color: #ccebfc;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.category_display_data div div{
+    margin-top: 10px;
+    
 }

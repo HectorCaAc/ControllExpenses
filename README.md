@@ -59,3 +59,8 @@ If you want to deploy this application on heroku it is required to download hero
 15. [ ] Make the task run to know how much money avaiable there are.
 16. [ ] When a category is created the amount Avaiable is 0
 17. [ ] Show if the user overspend of spend the right amount.
+18. [ ] Be sure that one user can not read data from other users
+19. [ ] Add more functionalities to the category body. 
+    ( notes of the user, receipts ?, Number of times the budget has over spend ??, should the category still count to the budget,  ) 
+20. [ ] Integrate wellsfargo api into the project if it is possible
+21. [ ] Inside of the category add graphs at the bottom to make it look better or some table
