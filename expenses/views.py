@@ -180,13 +180,8 @@ class CategoryListView(LoginRequiredMixin, FormView):
     
     def get(self, request):
         user = request.user
-        categories = Category.objects.filter(user=user).order_by('-id')
         data ={
-            'first': categories,
-            'category_list': categories,
-            'form': self.form_class,
-            'category_list_size': categories.count(),
-            'category_selected': categories.first()
+            'name': user.username
         }
         return render(request, self.template_name, data)
 

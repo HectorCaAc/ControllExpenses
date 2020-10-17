@@ -102,12 +102,16 @@ def categories(request, username):
     user = User.objects.filter(username=username)
     if not user.exists():
         return Response({'message': 'User not found'}, status=status.HTTP_400_BAD_REQUEST)
-    categories = {} 
-    for categori in Category.objects.filter(user=user.first()):
-        categories[categori.name] = {
-            'expense': categori.expense,
-            'spend_available': categori.spend_available
-        }
+    query = Category.objects.filter(user=user.first())
+    categories = [None]*query.count()
+    index = 0
+    for categori in query:
+        category_object = {}
+        category_object['name']= categori.name
+        category_object['expense'] = categori.expense
+        category_object['spend_available'] = categori.spend_available
+        categories[index] = category_object
+        index += 1
     print('*'*10+'GET CATEGORY'+'*'*10)
     print('category_request {}'.format(username))
     print(request)
