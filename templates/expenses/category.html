@@ -4,64 +4,10 @@
 <link rel="stylesheet" href="{% static 'css\category.css'%}">
 {% endblock %}
 {% block body %}
-<div class="category">
-  <!-- <div class="category_card">
-    <div class="category_header">
-      <div class="category_header_title">
-        <h4>Category</h4>
-      </div>
-      <div class="category_header_number">
-        <h4>{{ category_list_size}}</h4>
-      </div>
-    </div>
-    <div class="category_card_body">
-      {% for category in category_list%}
-      <div class="category_item" category={{category}}>
-        <div class="category_item_bar">
-          <h5>{{category.name}}</h5>
-          {% if category.current_circle > 0 %}
-          <div>
-            <h6>Next circle</h6>{{category.current_circle}}
-          </div>
-          {% endif %}
-        </div>
-        <div class="category_item_body">
-          <div>
-            <h6>Category Expense</h6>{{category.expense}}
-          </div>
-          <div>
-            <h6>Current use</h6>{{category.spend_available}}
-          </div>
-        </div>
-      </div>
-      {% endfor %}
-    </div>
-  </div>
-  <div class="category_body">
-    <div class="category_actions">
-      <div class="action">
-        Add Category
-      </div>
-    </div>
-    <div class="modal" class="modal-category">
-      <div class="modal_content">
-        <div modal="category" class="close_modal">
-          X
-        </div>
-        <form action="{% url 'expenses:add_category' %}" id="form-category" method="POST">
-          {% csrf_token %}
-          {{form.as_table}}
-          <input type="submit" values="Submit">
-        </form>
-      </div>
-    </div>
-    <div id="category_selected" category={{ first }} >
-    </div>
-  </div> -->
-  <div id="category_pannel">
-    <h4>Loading react into the project</h4>
+<div class="category_container">
+  <div id="category_pannel" name={{ name }}>
+
   </div>
 <script src="{% static 'main.js'%}" type="module"></script>
-<!-- <script src="{% static 'javascript/categorySelected.js' %}"></script> -->
 </div>
 {% endblock %}

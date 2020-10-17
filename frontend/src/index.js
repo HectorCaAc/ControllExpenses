@@ -1,2 +1,2 @@
 import "@babel/polyfill"
-import Categories from './components/Categories';
+import Category from './components/category';

@@ -3,15 +3,10 @@ const base_url = 'http://localhost:8000/api/'
 
 async function get_categories(user){
     let url = `${base_url}category/${user}/`
-    console.log(`Data requesting to the user ${user}`);
+    console.log(`Api request for user: ${user}`);
     const data = await fetch(url)
             .then(data=>data.json())
-            .then(body=>{
-                console.log('Body received')
-                console.log(body);
-            })
-    console.log('Data received');
-    console.log(data);
+    return data
 }
 
 async function get_category(user, category_name){

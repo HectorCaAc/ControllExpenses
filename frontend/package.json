@@ -26,6 +26,8 @@
   "devDependencies": {
     "@babel/polyfill": "^7.12.1",
     "@reduxjs/toolkit": "^1.4.0",
+    "css-loader": "^5.0.0",
+    "style-loader": "^2.0.0",
     "webpack": "^5.1.0",
     "webpack-dev-server": "^3.11.0"
   }
