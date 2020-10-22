@@ -1,0 +1,11 @@
+.add_form{
+    margin: 0px 0px 20px 0px;
+    background-color: white;
+    padding: 2%;
+    border-radius: 10px;
+}
+
+.add_form_body form{
+    display: flex;
+    justify-content: space-evenly;
+}

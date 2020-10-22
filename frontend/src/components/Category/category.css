@@ -6,25 +6,28 @@
 .category_options{
     height: 75vh;
     min-width: fit-content;
-    background-color: white;
     border-radius: 15px;
     padding-top: 2%;
     flex: 1;
     height: fit-content;
     max-height: 80vh;
     overflow-y: scroll;
+    background-color: white;
+}
+
+.right_pannel{
+    width: 80%;
+    flex: 2;
+    border-radius: 20px;
+    padding: 0% 2% 2% 2%;
 }
 
 .category_body{
-    width: 100%;
-    border-radius: 15px;
     background-color: white;
-    margin: 10px;
-    flex: 2;
-    
 }
 
 .category_body_header{
+    background-color: white;
     margin-top  : 10px;
     padding: 10px 10px 0px 10px;
     border-bottom: 1px solid #9db2d7;
@@ -48,7 +51,7 @@
 }
 
 .category_display{
-    height: 70vw;
+    height: 70vh;
 }
 
 .category_name{
@@ -65,9 +68,18 @@
 .category_display_data div{
     padding: 5%;
     margin: 1%;
-    background-color: #ccebfc;
+    
     border-radius: 15px;
     text-align: center;
+}
+
+.category_sucess{
+    background-color: #ccebfc;
+}
+
+.category_danger{
+    background-color: #023e8a;
+    color: white;
 }
 
 .category_display_data div div{
