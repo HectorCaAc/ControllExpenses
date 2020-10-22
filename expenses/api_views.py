@@ -13,6 +13,7 @@ from django.db.models import Sum
 
 from account.models import CustomUser
 from expenses.models import Category, Entry, Income
+from expenses.serializers import CategorySerializer
 
 @api_view(['POST'])
 @authentication_classes([SessionAuthentication, BasicAuthentication])
@@ -88,9 +89,27 @@ def add_category(request):
     """
         Add new category to certain user
     """
-    print('*'*10)
-    print('Add Category')
-    return Response({'message': 'OK'},status=status.HTTP_200_OK)
+    
+    print('*'*10+'Adding Category'+'*'*10)
+    user = request.user
+    body = request.data
+    data = {
+        'expense': body['category_amount'],
+        'name': body['add_category'],
+        'circle_repetition': body['circle_repetition'],
+        'user': user.pk
+    }
+    print('user {} data {}'.format(user, data))
+    serializer = CategorySerializer(data= data)
+    if serializer.is_valid():
+        check_category = Category.objects.filter(user=user, name=data['name'])
+        if check_category.exists():
+            return Response({'message': 'Duplicate Category'}, status=status.HTTP_400_BAD_REQUEST)
+        serializer.save()
+        return Response({'message': 'OK'},status=status.HTTP_200_OK)
+    else:
+        return Response({'message': 'wrong data', 'data': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+    print(serializer)
 
 @api_view(['GET'])
 # @authentication_classes([SessionAuthentication, BasicAuthentication])

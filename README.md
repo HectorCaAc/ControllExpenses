@@ -53,14 +53,26 @@ If you want to deploy this application on heroku it is required to download hero
 8. [ ] To if exists a lot of entries or at the moment of query those it will be a good idead to use the overflow
 9. [ ] Add test for the models (I have the feeling that the Income and the functionality to enter new income is not workig)
 11. [ ] the Model of entry and the form have a werid _init_, for an example check the fucntion form_valid from expesnses views personData to see it.
-12. [ ] Make the function to run schedule tasks 
-13. [ ] The delete category button is not working 
+12. [ ] Make the function to run schedule tasks.
+13. [ ] The proxy attribute is not working for the package json 
 14. [ ] The summary page hte income is not showing the right information
 15. [ ] Make the task run to know how much money avaiable there are.
 16. [ ] When a category is created the amount Avaiable is 0
 17. [ ] Show if the user overspend of spend the right amount.
 18. [ ] Be sure that one user can not read data from other users
-19. [ ] Add more functionalities to the category body. 
-    ( notes of the user, receipts ?, Number of times the budget has over spend ??, should the category still count to the budget,  ) 
+19. [ ] Add more functionalities to the category body.
+    - Notes of the user
+    - Receipts
+    - Number of times the budget has over spend
+    - Should the category still count to the budget
+    - Number of entries for the past 30 days.
 20. [ ] Integrate wellsfargo api into the project if it is possible
 21. [ ] Inside of the category add graphs at the bottom to make it look better or some table
+22. [ ] Required to add category option, then start to add the other options to the category 
+        (modify category, and export category)
+
+ ## TODAY TASKS
+- [ ] make the modify and export functionality to work..
+- [ ] Add 30 days pie diagram.
+- [ ] fixt space of the left bar.(navbar\)
+- [ ] Add income and spending of the user pannel.

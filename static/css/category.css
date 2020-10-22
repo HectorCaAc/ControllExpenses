@@ -1,4 +1,4 @@
-.category{
+/* .category{
     display: flex;
 }
 
@@ -7,7 +7,6 @@
     background-color: #ffffff;
     margin: 15px;
     border-radius: 25px;
-    /* height: 80vh; */
     height: fit-content;
     max-height: 80vh;
     overflow-y: scroll;
@@ -45,4 +44,4 @@
     display: flex;
     justify-content: space-between;
 }
-
+ */
