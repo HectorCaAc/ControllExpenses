@@ -117,33 +117,52 @@ def add_category(request):
 def categories(request, username):
     """
         Get all the categories related to certain user
+        URL PARAMS
+        --------
+        category_name = if given to the url then return details for the string, spaces are by +
     """
     user = User.objects.filter(username=username)
     if not user.exists():
-        return Response({'message': 'User not found'}, status=status.HTTP_400_BAD_REQUEST)
-    query = Category.objects.filter(user=user.first())
-    categories = [None]*query.count()
-    index = 0
-    for categori in query:
-        category_object = {}
-        category_object['name']= categori.name
-        category_object['expense'] = categori.expense
-        category_object['spend_available'] = categori.spend_available
-        categories[index] = category_object
-        index += 1
-    print('*'*10+'GET CATEGORY'+'*'*10)
-    print('category_request {}'.format(username))
-    print(request)
-    data = {
-        'message': 'request approved',
-        'categories': categories
-    }
-    print(data)
-    return Response(data, status=status.HTTP_200_OK)
+            return Response({'message': 'User not found'}, status=status.HTTP_400_BAD_REQUEST)
+    category_name = request.GET.get('category_name', None)
+    if category_name is None:
+        query = Category.objects.filter(user=user.first())
+        categories = [None]*query.count()
+        index = 0
+        for categori in query:
+            category_object = {}
+            category_object['name']= categori.name
+            category_object['expense'] = categori.expense
+            category_object['spend_available'] = categori.spend_available
+            categories[index] = category_object
+            index += 1
+        print('*'*10+'GET CATEGORY'+'*'*10)
+        print('category_request {}'.format(username))
+        print(request)
+        data = {
+            'message': 'request approved',
+            'categories': categories
+        }
+        print(data)
+        return Response(data, status=status.HTTP_200_OK)
+    else:
+        category_name = category_name.replace('+',' ')
+        query = Category.objects.filter(user=user.first(), name=category_name)
+        if not query.exists():
+            return Response({'message': 'Category not found'}, status=status.HTTP_400_BAD_REQUEST)
+        category = query.first()
+        attributes = {'expense', 'circle_repetition', 'name', 'current_circle', 'deficit', 'spend_available'}
+        data = {}
+        for attribute in attributes:
+            data[attribute] = getattr(category, attribute, None)
+        return Response({'message': 'category found', 'data': data})
+
+        return Response({'message': 'category found', 'data': category_name}, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 def category_description(request, username, category_name):
     user = User.objects.filter(username=username)
+    print('BACK END GETTING CATEGORY NAME {} FOR USER {}'.format(category_name, username))
     if not user.exists():
         return Response({'message': 'User not found'}, status=status.HTTP_400_BAD_REQUEST)
     category = Category.objects.filter(user=user.first(), name=category_name)

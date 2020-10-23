@@ -10,8 +10,12 @@ async function get_categories(user){
 }
 
 async function get_category(user, category_name){
-    let url = `${base_url}category/${user}/${category_name}/`
-    console.log(`Getting data for user ${user} and the category ${category_name}`)
+    let url = new URL(`${base_url}category/${user}`)
+    let params = {
+        category_name : category_name
+    }
+    Object.keys(params).forEach(key=> url.searchParams.append(key, params[key]))
+    console.log(`The url is${url}`);
     const response = await fetch(url,{
                     headers:{
                         'accepts':'application/json'
