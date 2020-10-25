@@ -74,5 +74,5 @@ If you want to deploy this application on heroku it is required to download hero
  ## TODAY TASKS
 - [ ] make the modify and export functionality to work..
 - [ ] Add 30 days pie diagram.
-- [ ] fixt space of the left bar.(navbar\)
-- [ ] Add income and spending of the user pannel.
+- [X] fixt space of the left bar.(navbar\)
+- [X] Add income and spending of the user pannel.

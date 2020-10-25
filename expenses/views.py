@@ -44,12 +44,19 @@ class PersonData(LoginRequiredMixin, FormView):
         balance = balance.first().current_balance
         categories = Category.objects.filter(user=user).order_by('expense')
         expenses = Entry.objects.filter(user=user).order_by('-price')
-        income = Income.objects.filter(user=user).count()
+        income = Income.objects.filter(user=user)
+        user_income = income.aggregate(Sum('amount'))
+        user_expense = expenses.aggregate(Sum('price'))
+        print('*'*10+'Getting Data '+'*'*10)
+        print(user_expense)
+        numbers_income = income.count()
         categories_order = [categories.first(), categories.last()]
         data = {
             'categories':categories_order,
             'expenses':expenses[:10],
-            'income':income,
+            'numbers_income':numbers_income,
+            'user_income':user_income['amount__sum'],
+            'user_expense': user_expense['price__sum'],
             'balance': balance,
             'form': self.form_class(user=user),
             'biggest_expense': expenses.first(),
