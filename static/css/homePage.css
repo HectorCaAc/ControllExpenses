@@ -96,12 +96,17 @@ table tr:hover{
 
 .expenses{
     display: flex;
+    justify-content: space-evenly;
+    text-align: center;
 }
 
 .item{
-    background-color: red;
     margin: 10px;
     border-radius: 15px;
+}
+
+.item_header{
+    margin-bottom: 10px;
 }
 
 .action{

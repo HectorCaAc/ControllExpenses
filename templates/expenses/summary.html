@@ -101,11 +101,15 @@
       <div class="summary_current_status_categories">
         <div class="category best">
           <h6>Best Category</h6>
-          {{categories.0}}
+          {{categories.0.name}}
+          {{categories.0.expense}}
+          {{categories.0.spend_available}}
         </div>
         <div class="category worst">
           <h6>Worst Category</h6>
           {{categories.1}}
+          {{categories.1.expense}}
+          {{categories.1.spend_available}}
         </div>
         <div class="add_category">
           <a href="{% url 'expenses:category' %}">
@@ -118,9 +122,15 @@
     <h6>last 30 days</h6>
     <div class="expenses">
       <div class="item">
+        <div class="item_header">
+          Most expensive entry
+        </div>
         {{biggest_expense}}
       </div>
       <div class="item">
+        <div class="item_header">
+          Lest expensive entry
+        </div>
         {{smallest_expense}}
       </div>
     </div>
@@ -136,8 +146,8 @@
           {% for expense in expenses %}
           <tr>
             <td>{{expense.description}}</td>
-            <td>${{expense.price}}</td>
-            <td>{{expense.date}}</td>
+            <td style="text-align: center;">${{expense.price}}</td>
+            <td style="text-align: center;">{{expense.date}}</td>
           </tr>
           {% endfor %}
         </table>
